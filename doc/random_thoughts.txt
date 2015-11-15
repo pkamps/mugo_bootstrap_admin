@@ -1,0 +1,10 @@
+full page view:
+- preview open in new tab. Dropdown to choose output format, including layout versions
+- content states more prominent
+- important info:
+  * last update, author
+  * languages
+  * content states
+  * path
+- no data preview
+- fancy content states UI
