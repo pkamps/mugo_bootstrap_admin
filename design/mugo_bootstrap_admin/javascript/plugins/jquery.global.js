@@ -24,9 +24,28 @@
 		{
 			var self = this;
 
-			$( 'button[data-target]' ).click(function()
+			// generic events
+			$( 'button[data-href]' ).click(function()
 			{
-				location.href = $(this).attr( 'data-target' );
+				location.href = $(this).attr( 'data-href' );
+			});
+
+			self.init_full_view();
+		},
+
+		init_full_view : function()
+		{
+			$( '#view-button li a' ).click( function()
+			{
+				// TODO: incomplete
+				$( '#viewModal iframe' ).attr( 'src', '/content/versionview/920791/5/eng-US/site_access/site_origin' );
+
+				$( '#viewModal' ).modal(
+				{
+					backdrop: true,
+				});
+
+				return false;
 			});
 		},
 	};

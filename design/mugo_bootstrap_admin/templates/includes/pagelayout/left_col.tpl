@@ -15,7 +15,7 @@
 		<div class="tree">
 			<ul>
 				<li class="container" data-node-id="1" data-open="1">
-					<span><i class="icon-folder-open"></i>Root</span>
+					<span><i class="icon-folder-open"></i>All</span>
 				</li>
 			</ul>
 		</div>

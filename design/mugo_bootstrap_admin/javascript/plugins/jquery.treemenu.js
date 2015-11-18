@@ -18,6 +18,11 @@
 		this.init();
 	}
 
+	function getCacheKey( containerTag )
+	{
+		return 'tree_cache_' + containerTag.attr( 'data-node-id' );
+	}
+
 	//drops debug output
 	function cleanData( data )
 	{
@@ -30,63 +35,74 @@
 		{
 			var self = this;
 
-			self.handleListResult( $( self.element ).find( 'li.container' ) );
+			self.loadList( $( self.element ).find( 'li.container' ), false );
 		},
 
-		loadList : function( containerTag )
+		loadList : function( containerTag, force )
 		{
 			var self = this;
+			var data = localStorage.getItem( getCacheKey( containerTag ) );
 
-			var url =
-				self.options.baseUrl +
-				'mugo_bootstrap_admin/treemenu_list/' +
-				containerTag.attr( 'data-node-id' );
-
-			$.get( url, function( data )
+			if( !data || force )
 			{
-				containerTag.append( cleanData( data ) );
+				console.log( 'server hit' );
+				var url =
+						self.options.baseUrl +
+						'mugo_bootstrap_admin/treemenu_list/' +
+						containerTag.attr( 'data-node-id' );
 
-				var children = containerTag.find( ' > ul > li' );
-				self.handleListResult( children );
-
-				containerTag.attr( 'data-loaded', '1' );
-			});
+				$.get( url, function( data )
+				{
+					localStorage.setItem( getCacheKey( containerTag ), cleanData( data ) );
+					containerTag.append( localStorage.getItem( getCacheKey( containerTag ) ) );
+					self.handleListResult( containerTag );
+				});
+			}
+			else
+			{
+				containerTag.append( localStorage.getItem( getCacheKey( containerTag ) ) );
+				self.handleListResult( containerTag );
+			}
 		},
 
-		handleListResult : function( children )
+		handleListResult : function( containerTag )
 		{
 			var self = this;
+
+			var children = containerTag.find( '> ul > li' );
 
 			$.each( children, function()
 			{
-				if( $(this).hasClass( 'container' ) )
+				var child = this;
+
+				if( $(child).hasClass( 'container' ) )
 				{
 					// Add click event
-					$(this).find( '> span' ).on( 'click', function(e)
+					$(child).find( '> span' ).on( 'click', function(e)
 					{
-						var containerTag = $(this).parent( 'li.container' );
+						var subContainerTag = $(this).parent( 'li.container' );
 
-						if( !containerTag.attr( 'data-loaded' ) )
+						var subChildren = subContainerTag.find( '> ul > li' );
+
+						if( !subChildren.length )
 						{
-							self.loadList( containerTag );
+							self.loadList( subContainerTag, false );
 						}
 						else
 						{
-							var children = containerTag.find( '> ul > li' );
-
-							if( children.length )
+							subChildren.toggle( 'fast', function()
 							{
-								children.toggle( 'fast' );
-							}
+								localStorage.removeItem( getCacheKey( $(child) ) );
+							});
 						}
 
 						return false;
 					});
 
 					// Is open
-					if( $(this).attr( 'data-open' ) )
+					if( localStorage.getItem( getCacheKey( $(child) ) ) !== null )
 					{
-						self.loadList( $(this) );
+						self.loadList( $(child), false );
 					}
 				}
 			});

@@ -1,9 +1,23 @@
 body
 {
 	padding-top: 5px;
+	margin-bottom: 50px;
 }
 
-.tree {
+.modal-max
+{
+	width: 95%;
+}
+
+.left-col
+{
+	top: 5px;
+	bottom: 50px;
+	overflow: scroll;
+}
+
+.tree
+{
 	min-height:20px;
 }
 .tree > ul
