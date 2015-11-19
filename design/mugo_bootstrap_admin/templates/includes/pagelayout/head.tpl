@@ -12,5 +12,10 @@
 	<link href={'stylesheets/bootstrap-treeview.min.css'|ezdesign()} rel="stylesheet">
 	<link href={'stylesheets/mugo_bootstrap_admin.css'|ezdesign()} rel="stylesheet">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	{def $page_head_scripts = array(
+		'modernizr.js',
+		'jquery-1.10.2.min.js',
+	)}
+
+	{ezscript_load( $page_head_scripts )}
 </head>

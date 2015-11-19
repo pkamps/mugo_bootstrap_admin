@@ -30,6 +30,9 @@
 				location.href = $(this).attr( 'data-href' );
 			});
 
+			// popovers
+			$( "[data-toggle=popover]" ).popover();
+
 			self.init_full_view();
 		},
 

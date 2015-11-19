@@ -1,5 +1,6 @@
+{def $elements = $module_result.path|extract( 0, $module_result.path|count()|dec() )}
 <ol class="breadcrumb">
-	{foreach $module_result.path as $entry}
+	{foreach $elements as $entry}
 		<li>
 			{if $entry.url}
 				<a href={$entry.url_alias|ezurl()}>

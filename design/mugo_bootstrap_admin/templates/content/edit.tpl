@@ -48,26 +48,6 @@
 
 {include uri='design:content/edit_validation.tpl'}
 
-<div id="maincontent">
-<div id="maincontent-design" class="float-break"><div id="fix">
-
-<!-- Maincontent START -->
-
-
-<div class="content-edit">
-
-<div class="context-block">
-
-
-
-{* DESIGN: Header START *}<div class="box-header">
-
-{* DESIGN: Mainline *}<div class="header-mainline"></div>
-
-{* DESIGN: Header END *}</div>
-
-{* DESIGN: Content START *}<div class="box-content">
-
 {* not sure what it is other than creating translation
 <div class="context-information">
 {if $object.content_class.description}
@@ -144,8 +124,6 @@
 {* DESIGN: Control bar END *}
 </div>
 
-</div>
-
 
 {* include uri='design:content/edit_relations.tpl' *}
 
@@ -162,16 +140,7 @@
     <input type="hidden" name="UseNodeAssigments" value="0" />
 {/if}
 
-</div>
-
-<!-- Maincontent END -->
-</div>
-<div class="break"></div>
-</div></div>
-
 </form>
-
-
 
 
 {literal}

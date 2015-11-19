@@ -35,37 +35,60 @@
 		{
 			var self = this;
 
-			self.loadList( $( self.element ).find( 'li.container' ), false );
+			self.loadList( $( self.element ).find( 'li.container' ) );
+
+			// hack
+			$( '.add-selected' ).click( function()
+			{
+				var nodes = self.getSelectedNodes();
+				var target = $(this).closest( '.proto-objectrelationlist' ).find( 'table' );
+				var row;
+
+				$.each( nodes, function()
+				{
+					row = '<tr><td></td><td>'+ this.name +'</td><td></td><td></td><td></td><td></td></tr>';
+					$(row).appendTo( target );
+				});
+			});
 		},
 
-		loadList : function( containerTag, force )
+		/**
+		 *
+		 * @param containerTag
+         * @param force
+         */
+		loadList : function( containerTag )
 		{
 			var self = this;
 			var data = localStorage.getItem( getCacheKey( containerTag ) );
 
-			if( !data || force )
+			if( !data )
 			{
-				console.log( 'server hit' );
 				var url =
 						self.options.baseUrl +
 						'mugo_bootstrap_admin/treemenu_list/' +
 						containerTag.attr( 'data-node-id' );
 
-				$.get( url, function( data )
+				$.get( url, function( response )
 				{
-					localStorage.setItem( getCacheKey( containerTag ), cleanData( data ) );
-					containerTag.append( localStorage.getItem( getCacheKey( containerTag ) ) );
-					self.handleListResult( containerTag );
+					data = cleanData( response );
+					localStorage.setItem( getCacheKey( containerTag ), data );
+					containerTag.append( data );
+					self.initList( containerTag );
 				});
 			}
 			else
 			{
-				containerTag.append( localStorage.getItem( getCacheKey( containerTag ) ) );
-				self.handleListResult( containerTag );
+				containerTag.append( data );
+				self.initList( containerTag );
 			}
 		},
 
-		handleListResult : function( containerTag )
+		/**
+		 *
+		 * @param containerTag
+         */
+		initList : function( containerTag )
 		{
 			var self = this;
 
@@ -75,22 +98,27 @@
 			{
 				var child = this;
 
+				self.initChild( child );
+				
 				if( $(child).hasClass( 'container' ) )
 				{
+					var subContainerTag = $(child);
+
 					// Add click event
 					$(child).find( '> span' ).on( 'click', function(e)
 					{
-						var subContainerTag = $(this).parent( 'li.container' );
-
 						var subChildren = subContainerTag.find( '> ul > li' );
 
+						// Load and show
 						if( !subChildren.length )
 						{
-							self.loadList( subContainerTag, false );
+							self.loadList( subContainerTag );
 						}
+						// Unload and hide
 						else
 						{
-							subChildren.toggle( 'fast', function()
+							//TODO: remove elements form DOC?
+							subChildren.hide( 'fast', function()
 							{
 								localStorage.removeItem( getCacheKey( $(child) ) );
 							});
@@ -102,11 +130,43 @@
 					// Is open
 					if( localStorage.getItem( getCacheKey( $(child) ) ) !== null )
 					{
-						self.loadList( $(child), false );
+						self.loadList( $(child) );
 					}
 				}
 			});
 		},
+
+		/**
+		 *
+		 * @param child
+         */
+		initChild : function( child )
+		{
+			$(child).bind( 'contextmenu', function(e)
+			{
+				$(this).toggleClass( 'bg-success' );
+				return false;
+			});
+		},
+
+		getSelectedNodes : function()
+		{
+			var self = this;
+
+			var result = [];
+
+			$.each( $(this.element).find( '.bg-success' ), function()
+			{
+				result.push(
+					{
+						id: 123,
+						name: $(this).find('> a').text(),
+						class: 'Image',
+					});
+			});
+
+			return result;
+		}
 	};
 
 	$.fn[pluginName] = function ( options ) {
