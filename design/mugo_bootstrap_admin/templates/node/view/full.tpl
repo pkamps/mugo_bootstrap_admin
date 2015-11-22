@@ -94,26 +94,11 @@
 					</div>
 				</div>
 
-				<table class="table">
-					<thead>
-					<tr>
-						<td></td>
-						<td>Name</td>
-					</tr>
-					</thead>
-					<tbody>
-					{foreach $children as $child}
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a href={$child.url_alias|ezurl()}>{$child.name|wash()}</a></td>
-						</tr>
-					{/foreach}
-					</tbody>
-				</table>
+				{include uri='design:includes/nodes_table.tpl' entries=$children}
 			</div>
 
 			<div role="tabpanel" class="tab-pane" id="tab-relations">
-				{include uri='design:relations.tpl'}
+				{include uri='design:includes/relations.tpl'}
 			</div>
 			<div role="tabpanel" class="tab-pane" id="tab-locations">
 				{include uri='design:locations.tpl'}

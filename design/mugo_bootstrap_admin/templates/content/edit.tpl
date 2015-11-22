@@ -34,6 +34,14 @@
         <div class="btn-group" role="group">
             <button class="btn btn-default" type="submit" name="PublishButton">{'Send for publishing'|i18n( 'design/admin/content/edit' )}</button>
             <button class="btn btn-default" type="submit" name="StoreButton">{'Store draft'|i18n( 'design/admin/content/edit' )}</button>
+            <button
+                    class="btn btn-default"
+                    type="submit"
+                    name="DiscardButton"
+                    onclick="return confirmDiscard( '{"Are you sure you want to discard the draft?"|i18n( 'design/admin/content/edit' )|wash(javascript)}' );"
+            >
+                    {'Discard draft'|i18n( 'design/admin/content/edit' )}
+            </button>
 
             {* for reference
             <input class="defaultbutton" type="submit" name="PublishButton" value="{'Send for publishing'|i18n( 'design/admin/content/edit' )}" title="{'Publish the contents of the draft that is being edited. The draft will become the published version of the object.'|i18n( 'design/admin/content/edit' )}" />
@@ -97,9 +105,10 @@
 </div>
 
 
-{* DESIGN: Content END *}</div>
+{* anything to keep here?
+</div>
 <div class="controlbar">
-{* DESIGN: Control bar START *}
+
 <div class="block">
     {if ezpreference( 'admin_edit_show_re_edit' )}
         <input type="checkbox" name="BackToEdit" />{'Back to edit'|i18n( 'design/admin/content/edit' )}
@@ -108,7 +117,7 @@
     <input class="button" type="submit" name="StoreButton" value="{'Store draft'|i18n( 'design/admin/content/edit' )}" title="{'Store the contents of the draft that is being edited and continue editing. Use this button to periodically save your work while editing.'|i18n( 'design/admin/content/edit' )}" />
     <input class="button" type="submit" name="StoreExitButton" value="{'Store draft and exit'|i18n( 'design/admin/content/edit' )}" title="{'Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.'|i18n( 'design/admin/content/edit' )}" />
     <input class="button" type="submit" name="DiscardButton" value="{'Discard draft'|i18n( 'design/admin/content/edit' )}" onclick="return confirmDiscard( '{'Are you sure you want to discard the draft?'|i18n( 'design/admin/content/edit' )|wash(javascript)}' );" title="{'Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).'|i18n( 'design/admin/content/edit' ) }" />
-	{* checking if the object is live or a gallery - for some children classes it checks if the parent object is live *}
+
 	{if or(
 			eq( $object.state_identifier_array.2, 'csm_live_states/live' ),
 			eq( $object.class_identifier, 'csm_gallery' ),
@@ -121,9 +130,9 @@
 	{/if}
     <input type="hidden" name="DiscardConfirm" value="1" />
 </div>
-{* DESIGN: Control bar END *}
-</div>
 
+</div>
+*}
 
 {* include uri='design:content/edit_relations.tpl' *}
 

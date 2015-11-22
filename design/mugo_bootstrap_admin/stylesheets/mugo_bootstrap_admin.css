@@ -80,3 +80,11 @@ body
 	border:1px solid #94a0b4;
 	color:#000
 }
+
+/** hacks **/
+button.draft
+{
+	max-width: 150px;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
