@@ -24,20 +24,43 @@
 		{
 			var self = this;
 
-			// generic events
+			// href in data attribute
 			$( 'button[data-href]' ).click(function()
 			{
 				location.href = $(this).attr( 'data-href' );
 			});
 
 			// popovers
-			$( "[data-toggle=popover]" ).popover();
+			$( '[data-toggle=popover]' ).popover();
+
+			// remember tab
+			//$( 'nav-tabs' )
 
 			self.init_full_view();
 		},
 
 		init_full_view : function()
 		{
+			// Create new button
+			$( '[data-handle="createnew"]' ).click(function()
+			{
+				var form = $(this).closest('form');
+
+				var input = $('<input>',
+						{
+							type: 'hidden',
+							name: 'NewButton',
+							value: '1'
+						} );
+
+				// set class id
+				form.find( '[name="ClassID"]' ).val( $(this).attr( 'data-classid' ) );
+
+				form.append( input );
+
+				form.submit();
+			});
+
 			$( '#view-button li a' ).click( function()
 			{
 				// TODO: incomplete

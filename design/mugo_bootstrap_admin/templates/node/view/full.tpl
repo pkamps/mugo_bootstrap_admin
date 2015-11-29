@@ -1,3 +1,7 @@
+{def $can_create_classes = fetch( 'content', 'can_instantiate_class_list', hash(
+	'parent_node', $node
+))}
+
 <div class="full">
 	<h1>{$node.name|wash()} <small>{$node.class_name|wash()}</small></h1>
 	<p>
@@ -8,7 +12,20 @@
 
 	<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group" role="group">
-			<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()} >Edit</button>
+			{if eq( $node.class_identifier, 'csm_gallery' )}
+				<div id="view-button" class="btn-group">
+					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<span class="caret"></span>
+						<span class="sr-only">Toggle Dropdown</span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="#">Captions</a></li>
+					</ul>
+				</div>
+			{else}
+				<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()} >Edit</button>
+			{/if}
 		</div>
 		<div id="view-button" class="btn-group">
 			<button type="button" class="btn btn-default">View</button>
@@ -28,9 +45,11 @@
 		<div class="btn-group">
 			<button type="button" class="btn btn-default">Remove</button>
 		</div>
+		{*
 		<div class="btn-group" role="group">
 			<button data-href={concat( '/content/history/', $node.contentobject_id )|ezurl()} type="button" class="btn btn-default">Manage Versions</button>
 		</div>
+		*}
 	</div>
 	<br>
 
@@ -40,7 +59,7 @@
 				<div class="panel-heading" role="tab" id="headingOne">
 					<h4 class="panel-title">
 						<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-							Object states
+							States
 						</a>
 					</h4>
 				</div>
@@ -51,16 +70,30 @@
 				</div>
 			</div>
 			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							Details
+						</a>
+					</h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<div class="panel-body">
+						{include uri='design:details.tpl'}
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
 				<div class="panel-heading" role="tab" id="headingThree">
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-							Details
+							Versions
 						</a>
 					</h4>
 				</div>
 				<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 					<div class="panel-body">
-						{include uri='design:details.tpl'}
+						Ajax pull
 					</div>
 				</div>
 			</div>
@@ -86,13 +119,32 @@
 			<div role="tabpanel" class="tab-pane active" id="tab-subitems">
 				<br>
 
-				<div class="btn-toolbar" role="toolbar">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default">Select</button>
-						<button type="button" class="btn btn-primary">Create new</button>
-						<button type="button" class="btn btn-default">Change order</button>
+				<form name="children" method="post" action={'content/action'|ezurl}>
+					<input type="hidden" name="NodeID" value="{$node.node_id}" />
+					<input type="hidden" name="ContentObjectID" value="{$node.contentobject_id}" />
+					<input type="hidden" name="ClassID" value="" />
+
+					<div class="btn-toolbar" role="toolbar">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default dropdown-toggle btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Create new <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								{foreach $can_create_classes as $class}
+									<li>
+										<a href="#" data-handle="createnew" data-classid="{$class.id}">
+											{$class.name|wash()}
+										</a>
+									</li>
+								{/foreach}
+							</ul>
+						</div>
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default">Select</button>
+							<button type="button" class="btn btn-default">Change order</button>
+						</div>
 					</div>
-				</div>
+				</form>
 
 				{include uri='design:includes/nodes_table.tpl' entries=$children}
 			</div>

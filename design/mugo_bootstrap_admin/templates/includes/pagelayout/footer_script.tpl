@@ -6,6 +6,7 @@
 	'bootstrap.min.js',
 	'plugins/jquery.treemenu.js',
 	'plugins/jquery.global.js',
+	'plugins/jquery.autosaveattribute.js',
 )}
 
 {ezscript_load( $page_head_scripts )}

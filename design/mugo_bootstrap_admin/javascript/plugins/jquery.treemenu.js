@@ -18,11 +18,6 @@
 		this.init();
 	}
 
-	function getCacheKey( containerTag )
-	{
-		return 'tree_cache_' + containerTag.attr( 'data-node-id' );
-	}
-
 	//drops debug output
 	function cleanData( data )
 	{
@@ -46,7 +41,7 @@
 
 				$.each( nodes, function()
 				{
-					row = '<tr><td></td><td>'+ this.name +'</td><td></td><td></td><td></td><td></td></tr>';
+					row = '<tr><td></td><td></td><td>'+ this.name +'</td><td></td><td></td><td></td><td></td></tr>';
 					$(row).appendTo( target );
 				});
 			});
@@ -60,19 +55,16 @@
 		loadList : function( containerTag )
 		{
 			var self = this;
-			var data = localStorage.getItem( getCacheKey( containerTag ) );
+			var data = localStorage.getItem( self.getUrl( containerTag ) );
 
 			if( !data )
 			{
-				var url =
-						self.options.baseUrl +
-						'mugo_bootstrap_admin/treemenu_list/' +
-						containerTag.attr( 'data-node-id' );
+				var url = self.getUrl( containerTag );
 
 				$.get( url, function( response )
 				{
 					data = cleanData( response );
-					localStorage.setItem( getCacheKey( containerTag ), data );
+					localStorage.setItem( url, data );
 					containerTag.append( data );
 					self.initList( containerTag );
 				});
@@ -107,7 +99,7 @@
 					// Add click event
 					$(child).find( '> span' ).on( 'click', function(e)
 					{
-						var subChildren = subContainerTag.find( '> ul > li' );
+						var subChildren = subContainerTag.find( '> ul' );
 
 						// Load and show
 						if( !subChildren.length )
@@ -117,18 +109,16 @@
 						// Unload and hide
 						else
 						{
-							//TODO: remove elements form DOC?
-							subChildren.hide( 'fast', function()
-							{
-								localStorage.removeItem( getCacheKey( $(child) ) );
-							});
+							subChildren.hide( 'fast' );
+							subChildren.remove();
+							localStorage.removeItem( self.getUrl( $(child) ) );
 						}
 
 						return false;
 					});
 
 					// Is open
-					if( localStorage.getItem( getCacheKey( $(child) ) ) !== null )
+					if( localStorage.getItem( self.getUrl( $(child) ) ) !== null )
 					{
 						self.loadList( $(child) );
 					}
@@ -166,7 +156,16 @@
 			});
 
 			return result;
-		}
+		},
+
+		getUrl : function( containerTag )
+		{
+			var self = this;
+
+			var type = containerTag.attr( 'data-type' ) || 'node_id';
+
+			return self.options.baseUrl + 'mugo_bootstrap_admin/treemenu_list/' + containerTag.attr( 'data-value' ) +  '/' + type;
+		},
 	};
 
 	$.fn[pluginName] = function ( options ) {

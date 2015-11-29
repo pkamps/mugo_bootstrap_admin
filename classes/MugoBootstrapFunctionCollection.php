@@ -13,7 +13,10 @@ class MugoBootstrapFunctionCollection
 
         $fetchParameters = array(
             'status' => array(
-                array( eZContentObjectVersion::STATUS_DRAFT )
+                array(
+                    eZContentObjectVersion::STATUS_DRAFT,
+                    eZContentObjectVersion::STATUS_INTERNAL_DRAFT,
+                )
             ),
             'creator_id' => $user->attribute( 'contentobject_id' ),
         );

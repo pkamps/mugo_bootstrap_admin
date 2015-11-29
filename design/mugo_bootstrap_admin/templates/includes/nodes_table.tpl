@@ -22,7 +22,7 @@
             <td>
                 <div class="btn-group">
                     <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button">
-                        <i class="glyphicon glyphicon-cog"></i>
+                        {$entry.class_identifier|class_icon( small, $entry.class_name )}
                     </button>
                     <ul class="dropdown-menu">
                         <li><a href={concat( '/content/edit/', $entry.contentobject_id )|ezurl()}>Edit</a></li>
@@ -32,7 +32,6 @@
                 </div>
             </td>
             <td>
-                {$entry.class_identifier|class_icon( small, $entry.class_name )}
                 <a href={$entry.url_alias|ezurl()}>{$entry.name|wash()}</a>
             </td>
             <td>{$entry.class_name}</td>

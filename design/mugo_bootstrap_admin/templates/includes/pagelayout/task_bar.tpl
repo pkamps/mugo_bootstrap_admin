@@ -15,20 +15,27 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {if $grouped_drafts}
-
                 {def $edit_url = ''}
                 {foreach $grouped_drafts as $group}
                     {set $edit_url = concat( 'content/edit/', $group.version.contentobject_id, '/', $group.version.version )}
 
                     {if $group.related|count()}
                         <div class="btn-group dropup">
-                            <button type="button" class="draft btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="caret"></span>
+                            <button data-href={$edit_url|ezurl()} type="button" class="btn btn-default">
+                                {* $group.version.object.class_identifier|class_icon( small, $group.version.object.class_name ) *}
                                 {$group.version.name|wash()}
+                            </button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu">
                                 {foreach $group.related as $related_version}
-                                    <li><a href="#">{$related_version.name|wash()}</a></li>
+                                    {set $edit_url = concat( 'content/edit/', $related_version.contentobject_id, '/', $related_version.version )}
+                                    <li>
+                                        {* $related_version.class_identifier|class_icon( small, $related_version.class_name ) *}
+                                        <a href={$edit_url|ezurl()}>{$related_version.name|wash()}</a>
+                                    </li>
                                 {/foreach}
                             </ul>
                         </div>

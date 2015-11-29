@@ -6,7 +6,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Title</title>
+	<title>Mugo Studio</title>
 
 	<link href={'stylesheets/bootstrap.min.css'|ezdesign()} rel="stylesheet">
 	<link href={'stylesheets/bootstrap-treeview.min.css'|ezdesign()} rel="stylesheet">

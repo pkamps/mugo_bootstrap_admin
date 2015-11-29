@@ -4,50 +4,79 @@ $module = $Params[ 'Module' ];
 $tpl    = eZTemplate::factory();
 $content = '';
 
-$parent_node_id = (int) $Params[ 'parent_node_id' ];
+$value = $Params[ 'value' ];
+$type = $Params[ 'type' ];
 
-if( $parent_node_id )
+switch( $type )
 {
-	// special case for setup node
-	if( $parent_node_id == 48 )
+	case 'view':
 	{
-		$moduleData = array();
+		$module = eZModule::findModule( $value );
 
-		$moduleIni = eZINI::instance( 'module.ini' );
-
-		$moduleNames = $moduleIni->variable( 'ModuleSettings', 'ModuleList' );
-		sort( $moduleNames );
-
-		foreach( $moduleNames as $identifier )
+		if( $module )
 		{
-			$module = eZModule::findModule( $identifier );
-
 			$viewData = array();
 
 			if( !empty( $module->Functions ) )
 			{
 				foreach( $module->Functions as $view )
 				{
-					$viewData[] = array(
-						'name' => explode( '/', $view[ 'uri' ] )[2],
-						'url' => $view[ 'uri' ],
-					);
+					$name = explode( '/', $view[ 'uri' ] )[2];
+
+					$viewData[ $name ] = $view[ 'uri' ];
 				}
 			}
 
-			$moduleDataEntry[] = array(
-				'identifier' => $identifier,
-				'name' => $module->Module[ 'name' ],
-				'views' => $viewData,
-			);
+			$tpl->setVariable( 'views', $viewData );
+			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_views.tpl' );
 		}
-		$tpl->setVariable( 'modules', $moduleDataEntry );
-		$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_modules.tpl' );
 	}
-	else
+	break;
+
+	case 'solr_filter':
 	{
-		$tpl->setVariable( 'parent_node_id', $parent_node_id );
-		$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_list.tpl' );
+		$node = eZContentObjectTreeNode::fetch( $value );
+
+		if( $node )
+		{
+			$dataMap = $node->attribute( 'data_map' );
+			$query = $dataMap[ 'solr_filter' ]->attribute( 'content' );
+
+			$tpl->setVariable( 'query', $query );
+			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_search.tpl' );
+		}
+	}
+	break;
+
+	// including type 'node_id'
+	default:
+	{
+		// special case for setup node
+		if( $value == 48 )
+		{
+			$moduleData = array();
+
+			$moduleIni = eZINI::instance( 'module.ini' );
+			$moduleNames = $moduleIni->variable( 'ModuleSettings', 'ModuleList' );
+
+			foreach( $moduleNames as $identifier )
+			{
+				$module = eZModule::findModule( $identifier );
+				// if module does not have a name
+				$name = $module->Module[ 'name' ] ? $module->Module[ 'name' ] : $identifier;
+				$moduleData[ $name ] = $identifier;
+			}
+
+			ksort( $moduleData, SORT_STRING );
+
+			$tpl->setVariable( 'modules', $moduleData );
+			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_modules.tpl' );
+		}
+		else
+		{
+			$tpl->setVariable( 'parent_node_id', $value );
+			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_list.tpl' );
+		}
 	}
 }
 
