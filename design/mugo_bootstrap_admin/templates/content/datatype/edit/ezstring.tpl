@@ -1,5 +1,34 @@
-{default attribute_base='ContentObjectAttribute'
-         html_class='full'}
-<input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="form-control ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="text" size="70" name="{$attribute_base}_ezstring_data_text_{$attribute.id}" value="{$attribute.data_text|wash( xhtml )}" />
-{/default}
+<div>
+    <input id="attribute-{$attribute.id}" data-id="{$attribute.id}" class="form-control" type="text" value="{$attribute.data_text|wash( xhtml )}" />
+</div>
 
+<script>
+    {literal}
+    $(function()
+    {
+        var savetimer;
+
+        var id = {/literal}{$attribute.id}{literal};
+
+        var instance = $( '#attribute-' + id ).autosaveattribute(
+        {
+            getData : function()
+            {
+                return $( '#attribute-' + id ).val();
+            },
+        });
+
+        $( '#attribute-' + id )
+            .keydown( function()
+            {
+                var textinput = this;
+
+                clearTimeout( savetimer );
+                savetimer = setTimeout( function()
+                {
+                    instance.autosaveattribute( 'save' );
+                }, 2000);
+            });
+    });
+    {/literal}
+</script>

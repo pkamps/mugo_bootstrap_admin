@@ -1,8 +1,12 @@
-{def $can_create_classes = fetch( 'content', 'can_instantiate_class_list', hash(
-	'parent_node', $node
-))}
+{def
+	$can_create_classes = fetch( 'content', 'can_instantiate_class_list', hash(
+		'parent_node', $node
+	))
+	$multi_edit = ezini( $node.class_identifier, 'MultiEdit', 'multiedit.ini' )
+}
 
 <div class="full">
+	{* node overview *}
 	<h1>{$node.name|wash()} <small>{$node.class_name|wash()}</small></h1>
 	<p>
 		Last update <i>{$node.object.current.modified|l10n( 'datetime' )}</i>,
@@ -10,9 +14,10 @@
 		<span class="pull-right">Languages: English</span>
 	</p>
 
+	{* node actions *}
 	<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group" role="group">
-			{if eq( $node.class_identifier, 'csm_gallery' )}
+			{if $multi_edit|count()}
 				<div id="view-button" class="btn-group">
 					<button type="button" class="btn btn-primary">Edit</button>
 					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -20,7 +25,9 @@
 						<span class="sr-only">Toggle Dropdown</span>
 					</button>
 					<ul class="dropdown-menu">
-						<li><a href="#">Captions</a></li>
+						{foreach $multi_edit as $key => $value}
+							<li><a href="#{$key}">{$value|wash()}</a></li>
+						{/foreach}
 					</ul>
 				</div>
 			{else}

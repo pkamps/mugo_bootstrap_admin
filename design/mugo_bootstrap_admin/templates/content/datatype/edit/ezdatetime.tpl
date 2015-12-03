@@ -4,14 +4,12 @@
     </div>
 </div>
 
-{* PEK: strange position but it's not working otherwise *}
 <script>
     {literal}
     $(function()
     {
-        //alert('d');
         var id = {/literal}{$attribute.id}{literal};
-        $( '#attribute-' + id ).autosaveattribute();
+        //$( '#attribute-' + id ).autosaveattribute();
     });
     {/literal}
 </script>

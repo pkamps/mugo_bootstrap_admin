@@ -5,6 +5,7 @@
         defaults =
         {
             baseUrl : '',
+            getData : getData,
         };
 
     function Plugin( element, options )
@@ -18,13 +19,23 @@
         this.init();
     }
 
+    function getData()
+    {
+        return null;
+    }
+
     Plugin.prototype =
     {
         init : function()
         {
             var self = this;
+        },
 
-            console.log( this );
+        save : function()
+        {
+            var self = this;
+
+            console.log( self.options.getData() );
         },
     };
 

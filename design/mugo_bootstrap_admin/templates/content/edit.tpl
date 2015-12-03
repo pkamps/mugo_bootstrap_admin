@@ -33,7 +33,7 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group" role="group">
-                <button class="btn btn-default" type="submit" name="PublishButton">{'Send for publishing'|i18n( 'design/admin/content/edit' )}</button>
+                <button class="btn btn-primary" type="submit" name="PublishButton">{'Send for publishing'|i18n( 'design/admin/content/edit' )}</button>
                 <button class="btn btn-default" type="submit" name="StoreButton">{'Store draft'|i18n( 'design/admin/content/edit' )}</button>
                 <button
                         class="btn btn-default"
