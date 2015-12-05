@@ -146,6 +146,28 @@
 								{/foreach}
 							</ul>
 						</div>
+						{def $mime_types = fetch( 'mugo_bootstrap_admin', 'can_upload_mime_types', hash(
+							'parent_node', $node,
+						))}
+						{if $mime_types|count()}
+							<div class="btn-group" role="group">
+								<div id="upload-files">
+									<button type="button" class="btn btn-default">Upload files</button>
+									<input class="hidden" type="file" multiple="multiple" accept="{$mime_types|implode(',')}" />
+								</div>
+							</div>
+							<script>
+							{literal}
+							$(function()
+							{
+								$( '#upload-files' ).uploadfilesbutton(
+								{
+									baseUrl: eZBaseUrl,
+								});
+							});
+							{/literal}
+							</script>
+						{/if}
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-default">Select</button>
 							<button type="button" class="btn btn-default">Change order</button>
