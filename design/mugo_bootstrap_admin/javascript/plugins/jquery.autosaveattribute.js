@@ -5,7 +5,8 @@
         defaults =
         {
             baseUrl : '',
-            getData : getData,
+            getData : null,
+            initTrigger: null,
         };
 
     function Plugin( element, options )
@@ -19,23 +20,84 @@
         this.init();
     }
 
-    function getData()
-    {
-        return null;
-    }
-
     Plugin.prototype =
     {
         init : function()
         {
             var self = this;
+
+            self.initTrigger();
         },
 
-        save : function()
+        save : function( content )
         {
             var self = this;
 
-            console.log( self.options.getData() );
+            var data = content || self.getData();
+
+            var formData = new FormData();
+
+            formData.append( 'attribute_id', $(this.element).attr( 'data-id' ) );
+            formData.append( 'version_id', $(this.element).attr( 'data-version-id' ) );
+            formData.append( 'data', data );
+            formData.append( 'ezxform_token', $( '#ezxform_token_js' ).attr( 'content' ) );
+
+            $.ajax(
+                {
+                    url: self.options.baseUrl + 'mugo_bootstrap_admin/store_attribute',
+                    type: 'POST',
+                    // Form data
+                    data: formData,
+                    dataType: 'json',
+                    //Options to tell jQuery not to process data or worry about content-type.
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function( data )
+                    {
+                        self.afterUpload( data );
+                    },
+                    error: function( data )
+                    {
+                        alert( 'Failed to store data.' );
+                    },
+                });
+        },
+
+        getData : function()
+        {
+            var self = this;
+
+            if( typeof self.options.getData === 'function' )
+            {
+                return self.options.getData();
+            }
+            else
+            {
+                return $(self.element).val();
+            }
+        },
+
+        initTrigger : function()
+        {
+            var self = this;
+
+            if( typeof self.options.initTrigger === 'function' )
+            {
+                return self.options.initTrigger( self );
+            }
+            else
+            {
+                $(self.element).change(function()
+                {
+                    self.save();
+                });
+            }
+        },
+
+        afterUpload : function( data )
+        {
+            //console.log( data );
         },
     };
 

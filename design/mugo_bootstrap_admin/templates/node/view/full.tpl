@@ -18,7 +18,7 @@
 	<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group" role="group">
 			{if $multi_edit|count()}
-				<div id="view-button" class="btn-group">
+				<div id="edit-button" class="btn-group">
 					<button type="button" class="btn btn-primary">Edit</button>
 					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
@@ -26,7 +26,7 @@
 					</button>
 					<ul class="dropdown-menu">
 						{foreach $multi_edit as $key => $value}
-							<li><a href="#{$key}">{$value|wash()}</a></li>
+							<li><a href={concat( '/mugo_bootstrap_admin/multi_edit?type=', $key, '&contentobject_id=', $node.contentobject_id )|ezurl()}>{$value|wash()}</a></li>
 						{/foreach}
 					</ul>
 				</div>
