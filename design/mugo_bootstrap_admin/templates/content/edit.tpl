@@ -1,12 +1,11 @@
-{ezcss_require( 'dam_image.css' )}
-{ezscript_require( array( 'jquery.tocanvas.js', 'jquery.damimages.js' ) )}
+{* ezcss_require( 'dam_image.css' ) *}
+{* ezscript_require( array( 'jquery.tocanvas.js', 'jquery.damimages.js' ) ) *}
 
 {def $action = concat( '/content/edit/', $object.id, '/', $edit_version, '/', $edit_language|not|choose( concat( $edit_language, '/' ), '/' ), $is_translating_content|not|choose( concat( $from_language, '/' ), '' ) )}
 {* Current gui locale, to be used for class [attribute] name & description fields *}
 {def $content_language = ezini( 'RegionalSettings', 'Locale' )}
 
-<div id="edit-form">
-    <form name="editform" id="editform" enctype="multipart/form-data" method="post" action={$action|ezurl}>
+<div id="edit-form" data-contentobject-id="{$object.id}" data-version-nr="{$edit_version}">
 
     {* This is to force form to use publish action instead of 'Manage version' button on enter key press in input and textarea elements. *}
     <input class="defaultbutton hide" type="submit" id="ezedit-default-button" name="PublishButton" value="{'Send for publishing'|i18n( 'design/admin/content/edit' )}" />
@@ -21,7 +20,6 @@
     </div>
     </div>
     *}
-
     <header>
         <h2>
             {$object.name|wash()}
@@ -33,8 +31,7 @@
 
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group" role="group">
-                <button class="btn btn-primary" type="submit" name="PublishButton">{'Send for publishing'|i18n( 'design/admin/content/edit' )}</button>
-                <button class="btn btn-default" type="submit" name="StoreButton">{'Store draft'|i18n( 'design/admin/content/edit' )}</button>
+                <button class="btn btn-primary" type="button" id="publish-button">{'Send for publishing'|i18n( 'design/admin/content/edit' )}</button>
                 <button
                         class="btn btn-default"
                         type="submit"
@@ -154,7 +151,6 @@
         {/if}
 
     </div>
-    </form>
 </div>
 
 
@@ -176,7 +172,8 @@ $(function( $ )//called on document.ready
         el.focus();
     }
 
-	$( '#maincolumn' ).edithelpersadmin();
+//	$( '#maincolumn' ).edithelpersadmin();
+    $( '#edit-form' ).editcontent();
 });
 
 function confirmDiscard( question )

@@ -164,7 +164,7 @@
 
 			var type = containerTag.attr( 'data-type' ) || 'node_id';
 
-			return self.options.baseUrl + 'mugo_bootstrap_admin/treemenu_list/' + containerTag.attr( 'data-value' ) +  '/' + type;
+			return self.options.baseUrl + '/mugo_bootstrap_admin/treemenu_list/' + containerTag.attr( 'data-value' ) +  '/' + type;
 		},
 	};
 

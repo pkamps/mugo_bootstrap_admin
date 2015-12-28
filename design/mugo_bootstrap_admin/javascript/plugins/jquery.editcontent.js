@@ -1,6 +1,6 @@
 ;(function ( $, window, document, undefined )
 {
-    var pluginName = 'uploadfilesbutton',
+    var pluginName = 'editcontent',
         pluginElement = null,
         defaults =
         {
@@ -24,45 +24,26 @@
         {
             var self = this;
 
-            self.formData = new FormData();
-            self.initEvents();
+            self.initTriggers();
         },
 
-        initEvents : function()
+        initTriggers : function()
         {
             var self = this;
 
-            $(self.element).find( 'button' ).click( function()
+            $( '#publish-button').click( function()
             {
-                $(self.element).find( 'input' ).click();
-                return false;
-            });
+                var formData = new FormData();
 
-            $(self.element).find( 'input' ).change( function()
-            {
-                $.each( this.files, function(index)
+                formData.append( 'contentobjectid', $( self.element ).attr( 'data-contentobject-id' ) );
+                formData.append( 'versionnr', $( self.element ).attr( 'data-version-nr' ) );
+
+                $.ajax(
                 {
-                    self.formData.append( 'files' + index, this );
-                });
-
-                self.upload();
-            });
-        },
-
-        upload : function()
-        {
-            var self = this;
-
-            self.formData.append( 'ezxform_token', $('[name="ezxform_token"]' ).val() );
-            self.formData.append( 'parent_node_id', $('[name="NodeID"]' ).val() );
-
-            $.ajax(
-                {
-                    url: self.options.baseUrl + '/mugo_bootstrap_admin/upload_files',
+                    url: self.options.baseUrl + '/mugo_bootstrap_admin/publish',
                     type: 'POST',
                     // Form data
-                    data: self.formData,
-                    //headers: { 'Content-Disposition' : 'filename=' +  encodeURIComponent( 'fips_upload_file.pdf' ) + ';' },
+                    data: formData,
                     dataType: 'json',
                     //Options to tell jQuery not to process data or worry about content-type.
                     cache: false,
@@ -70,54 +51,23 @@
                     processData: false,
                     success: function( data )
                     {
-                        self.afterUpload( data );
+                        self.afterPublish( data );
                     },
                     error: function( data )
                     {
-                        alert( 'Failed to upload files.' );
+                        alert( 'Failed to publish data.' );
                     },
                 });
+            });
         },
 
-        afterUpload : function( data )
+        afterPublish : function()
         {
             var self = this;
 
-            var message = 'Files uploaded:\n\n';
-            var result;
-
-            $.each( data, function()
-            {
-                result = this.errors !== '' ? this.errors : 'success';
-                message = message + this.name + ': ' + result + '\n';
-            });
-
-            message = message + '\n\n Do you want to edit the files now?';
-
-            var editRedirect = confirm( message );
-
-            if( editRedirect )
-            {
-                var parameters =
-                {
-                    contentobject_ids: [],
-                    redirect_node_id: $('[name="NodeID"]' ).val(),
-                }
-
-                $.each( data, function()
-                {
-                    parameters.contentobject_ids.push( this.contentobject_id );
-                });
-
-                var url = self.options.baseUrl + '/admin_edit/multi_edit?' + $.param( parameters );
-
-                location.href = url;
-            }
-            else
-            {
-                location.reload();
-            }
-        }
+            alert( 'save' );
+            //location.href = self.options.baseUrl;
+        },
     };
 
     $.fn[pluginName] = function ( options ) {

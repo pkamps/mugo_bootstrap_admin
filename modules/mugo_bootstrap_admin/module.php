@@ -24,6 +24,11 @@ $ViewList[ 'store_attribute' ] = array(
 		'script'     => 'store_attribute.php',
 );
 
+$ViewList[ 'publish' ] = array(
+		'ui_context' => 'edit',
+		'script'     => 'publish.php',
+);
+
 $ParentClassID = array(
 		'name'=> 'Parent_Class',
 		'values'=> array(),

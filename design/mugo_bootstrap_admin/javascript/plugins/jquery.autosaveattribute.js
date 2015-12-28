@@ -44,7 +44,7 @@
 
             $.ajax(
                 {
-                    url: self.options.baseUrl + 'mugo_bootstrap_admin/store_attribute',
+                    url: self.options.baseUrl + '/mugo_bootstrap_admin/store_attribute',
                     type: 'POST',
                     // Form data
                     data: formData,
