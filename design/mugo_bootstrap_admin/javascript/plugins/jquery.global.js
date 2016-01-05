@@ -41,6 +41,8 @@
 
 		init_full_view : function()
 		{
+			var self = this;
+
 			// Create new button
 			$( '[data-handle="createnew"]' ).click(function()
 			{
@@ -72,6 +74,35 @@
 				});
 
 				return false;
+			});
+
+			// show object versions
+			$( '#show-versions' ).click( function()
+			{
+				var formData = new FormData();
+				formData.append( 'contentobjectid', $( self.element ).find( 'input[name="ContentObjectID"]' ).val() );
+
+				$.ajax(
+				{
+					url: self.options.baseUrl + '/mugo_bootstrap_admin/versions',
+					type: 'POST',
+					// Form data
+					data: formData,
+					//dataType: 'text',
+					//Options to tell jQuery not to process data or worry about content-type.
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function( data )
+					{
+						console.log( data );
+						$( '#collapseThree > div' ).html( data );
+					},
+					error: function( data )
+					{
+						alert( 'Failed to publish data.' );
+					},
+				});
 			});
 		},
 	};

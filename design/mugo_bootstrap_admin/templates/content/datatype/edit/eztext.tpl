@@ -1,5 +1,5 @@
 <div>
-    <input id="attribute-{$attribute.id}" data-id="{$attribute.id}" data-version-nr="{$attribute.version}" class="form-control" type="text" value="{$attribute.data_text|wash( xhtml )}" />
+    <textarea id="attribute-{$attribute.id}" data-id="{$attribute.id}" data-version-nr="{$attribute.version}" class="form-control" type="text">{$attribute.data_text|wash( xhtml )}</textarea>
 </div>
 
 <script>

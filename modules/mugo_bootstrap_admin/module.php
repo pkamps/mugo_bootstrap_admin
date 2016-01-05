@@ -29,6 +29,16 @@ $ViewList[ 'publish' ] = array(
 		'script'     => 'publish.php',
 );
 
+$ViewList[ 'discard' ] = array(
+		'ui_context' => 'edit',
+		'script'     => 'discard.php',
+);
+
+$ViewList[ 'versions' ] = array(
+		'ui_context' => 'edit',
+		'script'     => 'versions.php',
+);
+
 $ParentClassID = array(
 		'name'=> 'Parent_Class',
 		'values'=> array(),

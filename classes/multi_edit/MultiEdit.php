@@ -2,11 +2,11 @@
 
 class MultiEdit
 {
-    public function getRelatedObjects( $contextObjectId )
+    public function getRelatedObjects( $handleObjectId )
     {
         $return = array();
 
-        $eZObj = eZContentObject::fetch( $contextObjectId );
+        $eZObj = eZContentObject::fetch( $handleObjectId );
         $parentNode = $eZObj->attribute( 'main_node' );
 
         $children = $parentNode->attribute( 'children' );
@@ -29,7 +29,7 @@ class MultiEdit
         {
             // If this user already has a draft in this language
             $filters = array(
-                'contentobject_id' => $object->attribute( 'contentobject_id' ),
+                'contentobject_id' => $object->attribute( 'id' ),
                 'status' => array( array( eZContentObjectVersion::STATUS_DRAFT, eZContentObjectVersion::STATUS_INTERNAL_DRAFT ) ),
                 //'version' => array( '>', $sourceVersionID ),
                 //'initial_language_id' => $sourceVersionLanguageID,
@@ -58,6 +58,8 @@ class MultiEdit
 
     public static function factory( $context )
     {
-        return new MultiEdit();
+        $class = class_exists( $context ) ? $context : 'MultiEdit';
+
+        return new $class;
     }
 }

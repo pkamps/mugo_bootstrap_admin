@@ -38,7 +38,7 @@
             var formData = new FormData();
 
             formData.append( 'attribute_id', $(this.element).attr( 'data-id' ) );
-            formData.append( 'version_id', $(this.element).attr( 'data-version-id' ) );
+            formData.append( 'version_id', $(this.element).attr( 'data-version-nr' ) );
             formData.append( 'data', data );
             formData.append( 'ezxform_token', $( '#ezxform_token_js' ).attr( 'content' ) );
 

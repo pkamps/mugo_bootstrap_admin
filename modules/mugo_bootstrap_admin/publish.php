@@ -3,29 +3,41 @@
 /**
  * $_REQUEST
  *
- * contentobjectid
- * versionnr
+ * handleid
+ * versionids
  *
  */
 
 $return = false;
 
-$contentobject_id = (int) $_REQUEST[ 'contentobjectid' ];
-$version_nr = (int) $_REQUEST[ 'versionnr' ];
+$contentobject_id = (int) $_REQUEST[ 'handleid' ];
+$versionIds = $_REQUEST[ 'versionids' ];
 
-if( $contentobject_id &&  $version_nr )
+if( !empty( $versionIds ) )
 {
-    $result = eZOperationHandler::execute(
-        'content',
-        'publish',
-        array(
-            'object_id' => $contentobject_id,
-            'version' => $version_nr,
-        )
-    );
+    foreach( $versionIds as $versionId )
+    {
+        $version = eZContentObjectVersion::fetch( $versionId );
 
-    $return = $result[ 'status' ] ==  1;
+        if( $version )
+        {
+            $result = eZOperationHandler::execute(
+                'content',
+                'publish',
+                array(
+                    'object_id' => $version->attribute( 'contentobject_id' ),
+                    'version' => $version->attribute( 'version' ),
+                )
+            );
+        }
+    }
+
+    $eZObj = eZContentObject::fetch( $contentobject_id );
+
+    $result[ 'target' ] = $eZObj->attribute( 'main_node' )->attribute( 'url_alias' );
+    $return = $result;
 }
 
-echo $return;
+header( 'Content-Type: application/json' );
+echo json_encode( $return );
 eZExecution::cleanExit();

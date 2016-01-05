@@ -1,5 +1,4 @@
 {* ezcss_require( 'dam_image.css' ) *}
-{* ezscript_require( array( 'jquery.tocanvas.js', 'jquery.damimages.js' ) ) *}
 
 {def $action = concat( '/content/edit/', $object.id, '/', $edit_version, '/', $edit_language|not|choose( concat( $edit_language, '/' ), '/' ), $is_translating_content|not|choose( concat( $from_language, '/' ), '' ) )}
 {* Current gui locale, to be used for class [attribute] name & description fields *}
@@ -32,13 +31,8 @@
         <div class="btn-toolbar" role="toolbar">
             <div class="btn-group" role="group">
                 <button class="btn btn-primary" type="button" id="publish-button">{'Send for publishing'|i18n( 'design/admin/content/edit' )}</button>
-                <button
-                        class="btn btn-default"
-                        type="submit"
-                        name="DiscardButton"
-                        onclick="return confirmDiscard( '{"Are you sure you want to discard the draft?"|i18n( 'design/admin/content/edit' )|wash(javascript)}' );"
-                >
-                        {'Discard draft'|i18n( 'design/admin/content/edit' )}
+                <button class="btn btn-default" type="submit" id="discard-button">
+                    {'Discard draft'|i18n( 'design/admin/content/edit' )}
                 </button>
 
                 {* for reference
@@ -154,35 +148,11 @@
 </div>
 
 
-{literal}
 <script type="text/javascript">
-$(function( $ )//called on document.ready
+{literal}
+$(function()
 {
-    var docScrollTop = 0, el = $('#editform input:text:enabled:first');
-
-    if ( document.body.scrollTop !== undefined )
-    	docScrollTop = document.body.scrollTop;// DOM compliant
-    else if ( document.documentElement.scrollTop  !== undefined )
-    	docScrollTop = document.documentElement.scrollTop;// IE6 standards mode;
-
-    // Do not set focus if user has scrolled
-    if ( docScrollTop < 10 )
-    {
-    	window.scrollTo(0, Math.max( el.offset().top - 180, 0 ));
-        el.focus();
-    }
-
-//	$( '#maincolumn' ).edithelpersadmin();
     $( '#edit-form' ).editcontent();
 });
-
-function confirmDiscard( question )
-{
-    // Disable/bypass the reload-based (plain HTML) confirmation interface.
-    document.editform.DiscardConfirm.value = "0";
-
-    // Ask user if she really wants do it, return this to the handler.
-    return confirm( question );
-}
-</script>
 {/literal}
+</script>

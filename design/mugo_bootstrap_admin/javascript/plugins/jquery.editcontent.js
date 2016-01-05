@@ -33,6 +33,30 @@
 
             $( '#publish-button').click( function()
             {
+                $.ajax(
+                {
+                    url: self.options.baseUrl + '/mugo_bootstrap_admin/publish',
+                    type: 'POST',
+                    // Form data
+                    data: self.getFormData(),
+                    dataType: 'json',
+                    //Options to tell jQuery not to process data or worry about content-type.
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function( data )
+                    {
+                        self.afterPublish( data );
+                    },
+                    error: function( data )
+                    {
+                        alert( 'Failed to publish data.' );
+                    },
+                });
+            });
+
+            $( '#discard-button' ).click( function()
+            {
                 var formData = new FormData();
 
                 formData.append( 'contentobjectid', $( self.element ).attr( 'data-contentobject-id' ) );
@@ -40,7 +64,7 @@
 
                 $.ajax(
                 {
-                    url: self.options.baseUrl + '/mugo_bootstrap_admin/publish',
+                    url: self.options.baseUrl + '/mugo_bootstrap_admin/discard',
                     type: 'POST',
                     // Form data
                     data: formData,
@@ -61,12 +85,25 @@
             });
         },
 
-        afterPublish : function()
+        afterPublish : function( data )
         {
             var self = this;
 
-            alert( 'save' );
-            //location.href = self.options.baseUrl;
+            location.href = self.options.baseUrl + '/' + data.target;
+        },
+
+        getFormData : function()
+        {
+            var self = this;
+
+            var formData = new FormData();
+
+            $.each( $( '*[data-version-id]' ), function()
+            {
+                formData.append( 'versionids[]', $(this).attr( 'data-version-id' ) );
+            });
+
+            return formData;
         },
     };
 
