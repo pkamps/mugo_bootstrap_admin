@@ -17,7 +17,7 @@ if( $objId )
     $objects = $multiEdit->getRelatedObjects( $objId );
 
     $tpl = eZTemplate::factory();
-    $tpl->setVariable( 'redirect_node_id', (int)$_REQUEST[ 'redirect_node_id'] );
+    $tpl->setVariable( 'construct_id', $objId );
     $tpl->setVariable( 'versions', $multiEdit->getDraftVersions( $objects ) );
 
     $Result = array();

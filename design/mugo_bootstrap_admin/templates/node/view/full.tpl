@@ -19,7 +19,7 @@
 		<div class="btn-group" role="group">
 			{if $multi_edit|count()}
 				<div id="edit-button" class="btn-group">
-					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()}>Edit</button>
 					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
 						<span class="sr-only">Toggle Dropdown</span>
@@ -31,7 +31,7 @@
 					</ul>
 				</div>
 			{else}
-				<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()} >Edit</button>
+				<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()}>Edit</button>
 			{/if}
 		</div>
 		<div id="view-button" class="btn-group">

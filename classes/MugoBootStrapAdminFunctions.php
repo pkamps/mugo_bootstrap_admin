@@ -27,16 +27,16 @@ class MugoBootStrapAdminFetchFunctions
             $fetchParameters
         );
 
-        $flat = array();
+        $return = array();
         foreach( $versions as $version )
         {
-            $flat[ $version->attribute( 'contentobject_id' ) ] = array(
+            $return[ $version->attribute( 'contentobject_id' ) ] = array(
                 'version' => $version,
                 'related' => array(),
             );
         }
 
-        foreach( $flat as $id => $entry )
+        foreach( $return as $id => $entry )
         {
             $eZObj = $entry[ 'version' ]->attribute( 'contentobject' );
             switch( $eZObj->attribute( 'class_identifier' ) )
@@ -52,17 +52,17 @@ class MugoBootStrapAdminFetchFunctions
 
                     foreach( $revese_related_objects as $rr_eZObj )
                     {
-                        if( isset( $flat[ $rr_eZObj->attribute( 'id' ) ] ) )
+                        if( isset( $return[ $rr_eZObj->attribute( 'id' ) ] ) )
                         {
-                            $flat[ $rr_eZObj->attribute( 'id' ) ][ 'related' ][] = $entry[ 'version' ];
-                            unset( $flat[ $eZObj->attribute( 'id' ) ] );
+                            $return[ $rr_eZObj->attribute( 'id' ) ][ 'related' ][] = $entry[ 'version' ];
+                            unset( $return[ $eZObj->attribute( 'id' ) ] );
                         }
                     }
                 }
             }
         }
 
-        return array( 'result' => $flat );
+        return array( 'result' => $return );
     }
 
     /**

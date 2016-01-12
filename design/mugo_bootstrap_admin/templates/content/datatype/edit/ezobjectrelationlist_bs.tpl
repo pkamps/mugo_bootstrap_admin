@@ -1,16 +1,4 @@
-<div class="proto-objectrelationlist">
-    {if $attribute.has_content}
-        {* build node list *}
-        {def $related_nodes = array()}
-        {foreach $attribute.content.relation_list as $row}
-            {set $related_nodes = $related_nodes|append( fetch( 'content', 'node', hash( 'node_id', $row.node_id ) ) )}
-        {/foreach}
-
-        {include uri='design:includes/nodes_table.tpl' entries=$related_nodes}
-    {else}
-        <p>{'There are no related objects.'|i18n( 'design/standard/content/datatype' )}</p>
-    {/if}
-
+<div id="attribute-{$attribute.id}">
     <div class="btn-toolbar" role="toolbar" aria-label="...">
         <div class="btn-group">
             {if and( $can_create, array( 0, 1 )|contains( $class_content.type ) )}
@@ -27,12 +15,35 @@
                 </div>
             {/if}
 
-            <button class="btn btn-default" type="submit" name="CustomActionButton[{$attribute.id}_remove_objects]">{'Remove selected'|i18n( 'design/standard/content/datatype' )}</button>&nbsp;
-            <button class="btn btn-default" type="submit" name="CustomActionButton[{$attribute.id}_edit_objects]">{'Edit selected'|i18n( 'design/standard/content/datatype' )}</button>
-            <button class="btn btn-default add-selected" type="button">Add selected nodes</button>
+            <button class="btn btn-default remove-marked" type="button">{'Remove selected'|i18n( 'design/standard/content/datatype' )}</button>
+            <button class="btn btn-default add-marked" type="button">Add marked entries</button>
         </div>
     </div>
+
+    {if $attribute.has_content}
+        {* build node list *}
+        {def $related_nodes = array()}
+        {foreach $attribute.content.relation_list as $row}
+            {set $related_nodes = $related_nodes|append( fetch( 'content', 'node', hash( 'node_id', $row.node_id ) ) )}
+        {/foreach}
+
+        {include uri='design:includes/nodes_table.tpl' entries=$related_nodes}
+    {else}
+        <p>{'There are no related objects.'|i18n( 'design/standard/content/datatype' )}</p>
+    {/if}
+
 </div>
+
+<script>
+    {literal}
+    $(function()
+    {
+        var id = {/literal}{$attribute.id}{literal};
+
+        $( '#attribute-' + id ).editobjectrelationlist();
+    });
+    {/literal}
+</script>
 
 
 {* not sure if I want to support it

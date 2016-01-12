@@ -57,17 +57,12 @@
 
             $( '#discard-button' ).click( function()
             {
-                var formData = new FormData();
-
-                formData.append( 'contentobjectid', $( self.element ).attr( 'data-contentobject-id' ) );
-                formData.append( 'versionnr', $( self.element ).attr( 'data-version-nr' ) );
-
                 $.ajax(
                 {
                     url: self.options.baseUrl + '/mugo_bootstrap_admin/discard',
                     type: 'POST',
                     // Form data
-                    data: formData,
+                    data: self.getFormData(),
                     dataType: 'json',
                     //Options to tell jQuery not to process data or worry about content-type.
                     cache: false,
@@ -97,6 +92,8 @@
             var self = this;
 
             var formData = new FormData();
+
+            formData.append( 'constructid', $(self.element).attr( 'data-contentobject-id' ) );
 
             $.each( $( '*[data-version-id]' ), function()
             {

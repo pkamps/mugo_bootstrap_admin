@@ -31,20 +31,6 @@
 			var self = this;
 
 			self.loadList( $( self.element ).find( 'li.container' ) );
-
-			// hack
-			$( '.add-selected' ).click( function()
-			{
-				var nodes = self.getSelectedNodes();
-				var target = $(this).closest( '.proto-objectrelationlist' ).find( 'table' );
-				var row;
-
-				$.each( nodes, function()
-				{
-					row = '<tr><td></td><td></td><td>'+ this.name +'</td><td></td><td></td><td></td><td></td></tr>';
-					$(row).appendTo( target );
-				});
-			});
 		},
 
 		/**
@@ -149,9 +135,9 @@
 			{
 				result.push(
 					{
-						id: 123,
+						contentobject_id: 123,
 						name: $(this).find('> a').text(),
-						class: 'Image',
+						class_name: 'Image',
 					});
 			});
 

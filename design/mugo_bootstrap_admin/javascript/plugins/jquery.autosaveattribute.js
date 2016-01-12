@@ -97,6 +97,10 @@
 
         afterUpload : function( data )
         {
+            var self = this;
+
+            $( self.element ).attr( 'data-dirty', 0 );
+
             //console.log( data );
         },
     };

@@ -10,19 +10,28 @@
 
 $return = false;
 
-$contentobject_id = (int) $_REQUEST[ 'contentobjectid' ];
-$version_nr = (int) $_REQUEST[ 'versionnr' ];
+$contentobject_id = (int) $_REQUEST[ 'constructid' ];
+$versionIds = $_REQUEST[ 'versionids' ];
 
-if( $contentobject_id &&  $version_nr )
+if( !empty( $versionIds ) )
 {
-    $version = eZContentObjectVersion::fetchVersion( $version_nr, $contentobject_id );
-    $version->removeThis();
+    foreach( $versionIds as $versionId )
+    {
+        $version = eZContentObjectVersion::fetch( $versionId );
+        $version->removeThis();
+    }
 
-    $eZObj = eZContentObject::fetch( $contentobject_id );
+    $targetUrl = '';
+
+    if( $contentobject_id )
+    {
+        $eZObj = eZContentObject::fetch( $contentobject_id );
+        $targetUrl = $eZObj->attribute( 'main_node' )->attribute( 'url_alias' );
+    }
 
     $result = array(
         'status' => 1,
-        'target' => $eZObj->attribute( 'main_node' )->attribute( 'url_alias' ),
+        'target' => $targetUrl,
     );
 
     $return = $result;

@@ -1,10 +1,14 @@
 {* ezcss_require( 'dam_image.css' ) *}
 
-{def $action = concat( '/content/edit/', $object.id, '/', $edit_version, '/', $edit_language|not|choose( concat( $edit_language, '/' ), '/' ), $is_translating_content|not|choose( concat( $from_language, '/' ), '' ) )}
+{def $version = fetch( 'content', 'version', hash(
+    'object_id',  $object.id,
+    'version_id', $edit_version) )
+}
+
 {* Current gui locale, to be used for class [attribute] name & description fields *}
 {def $content_language = ezini( 'RegionalSettings', 'Locale' )}
 
-<div id="edit-form" data-contentobject-id="{$object.id}" data-version-nr="{$edit_version}">
+<div id="edit-form" data-contentobject-id="{$object.id}" data-version-id="{$version.id}">
 
     {* This is to force form to use publish action instead of 'Manage version' button on enter key press in input and textarea elements. *}
     <input class="defaultbutton hide" type="submit" id="ezedit-default-button" name="PublishButton" value="{'Send for publishing'|i18n( 'design/admin/content/edit' )}" />

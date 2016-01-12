@@ -64,6 +64,8 @@ $(function()
 	{
 		baseUrl : eZBaseUrl,
 	});
+
+	$( '#left-column-tabs' ).remembertab();
 });
 </script>
 {/literal}

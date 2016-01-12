@@ -10,7 +10,7 @@
 
 $return = false;
 
-$contentobject_id = (int) $_REQUEST[ 'handleid' ];
+$contentobject_id = (int) $_REQUEST[ 'constructid' ];
 $versionIds = $_REQUEST[ 'versionids' ];
 
 if( !empty( $versionIds ) )

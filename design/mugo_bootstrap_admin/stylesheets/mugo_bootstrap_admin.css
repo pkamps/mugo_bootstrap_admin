@@ -16,6 +16,11 @@ body
 	overflow: scroll;
 }
 
+.template
+{
+	display: none;
+}
+
 /*
 #edit-form .content
 {
