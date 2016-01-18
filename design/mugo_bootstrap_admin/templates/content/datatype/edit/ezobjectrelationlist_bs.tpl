@@ -1,4 +1,4 @@
-<div id="attribute-{$attribute.id}">
+<div id="attribute-{$attribute.id}" data-id="{$attribute.id}" data-version-nr="{$attribute.version}">
     <div class="btn-toolbar" role="toolbar" aria-label="...">
         <div class="btn-group">
             {if and( $can_create, array( 0, 1 )|contains( $class_content.type ) )}
@@ -20,17 +20,17 @@
         </div>
     </div>
 
+    {def $related_nodes = array()}
     {if $attribute.has_content}
         {* build node list *}
-        {def $related_nodes = array()}
         {foreach $attribute.content.relation_list as $row}
             {set $related_nodes = $related_nodes|append( fetch( 'content', 'node', hash( 'node_id', $row.node_id ) ) )}
         {/foreach}
-
-        {include uri='design:includes/nodes_table.tpl' entries=$related_nodes}
-    {else}
-        <p>{'There are no related objects.'|i18n( 'design/standard/content/datatype' )}</p>
     {/if}
+
+    {include uri='design:includes/nodes_table.tpl' entries=$related_nodes}
+
+    {* <p>{'There are no related objects.'|i18n( 'design/standard/content/datatype' )}</p> *}
 
 </div>
 

@@ -50,7 +50,7 @@
 			<button type="button" class="btn btn-default">Move</button>
 		</div>
 		<div class="btn-group">
-			<button type="button" class="btn btn-default">Remove</button>
+			<button type="button" class="btn btn-default remove-button">Remove</button>
 		</div>
 		{*
 		<div class="btn-group" role="group">

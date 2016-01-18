@@ -7,6 +7,8 @@
             baseUrl : '',
             getData : null,
             initTrigger: null,
+            attributeId: null,
+            versionNr: null,
         };
 
     function Plugin( element, options )
@@ -26,6 +28,9 @@
         {
             var self = this;
 
+            self.options.attributeId = self.options.attributeId || parseInt( $(this.element).attr( 'data-id' ) );
+            self.options.versionNr = self.options.versionNr || parseInt( $(this.element).attr( 'data-version-nr' ) );
+
             self.initTrigger();
         },
 
@@ -37,31 +42,31 @@
 
             var formData = new FormData();
 
-            formData.append( 'attribute_id', $(this.element).attr( 'data-id' ) );
-            formData.append( 'version_id', $(this.element).attr( 'data-version-nr' ) );
+            formData.append( 'attribute_id', self.options.attributeId );
+            formData.append( 'version_id', self.options.versionNr );
             formData.append( 'data', data );
             formData.append( 'ezxform_token', $( '#ezxform_token_js' ).attr( 'content' ) );
 
             $.ajax(
+            {
+                url: self.options.baseUrl + '/mugo_bootstrap_admin/store_attribute',
+                type: 'POST',
+                // Form data
+                data: formData,
+                dataType: 'json',
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function( data )
                 {
-                    url: self.options.baseUrl + '/mugo_bootstrap_admin/store_attribute',
-                    type: 'POST',
-                    // Form data
-                    data: formData,
-                    dataType: 'json',
-                    //Options to tell jQuery not to process data or worry about content-type.
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function( data )
-                    {
-                        self.afterUpload( data );
-                    },
-                    error: function( data )
-                    {
-                        alert( 'Failed to store data.' );
-                    },
-                });
+                    self.afterUpload( data );
+                },
+                error: function( data )
+                {
+                    alert( 'Failed to store data.' );
+                },
+            });
         },
 
         getData : function()
@@ -70,7 +75,7 @@
 
             if( typeof self.options.getData === 'function' )
             {
-                return self.options.getData();
+                return self.options.getData( self );
             }
             else
             {

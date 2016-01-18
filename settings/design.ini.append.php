@@ -13,6 +13,7 @@ JavaScriptList[]=plugins/jquery.uploadfilesbutton.js
 JavaScriptList[]=plugins/jquery.editcontent.js
 JavaScriptList[]=plugins/jquery.editobjectrelationlist.js
 JavaScriptList[]=plugins/jquery.remembertab.js
+JavaScriptList[]=plugins/jquery.waitingmodal.js
 JavaScriptList[]=jquery.relatedContentAdder.js
 JavaScriptList[]=jquery-ui.min.js
 JavaScriptList[]=jquery.tocanvas.js

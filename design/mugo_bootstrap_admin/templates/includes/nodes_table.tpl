@@ -16,23 +16,25 @@
 			<td style="width: 20px;"></td>
 			<td style="width: 40px;"></td>
 			<td>Name</td>
+			<td>Published</td>
 			<td>Type</td>
 		</tr>
 	</thead>
 	<tbody>
-		<tr class="template">
+		<tr data-contentobject-id="[[contentObjectId]]" class="template">
 			<td><input type="checkbox" /></td>
 			<td>
 				<div class="btn-group">
 					<button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button">
-						[[contentobject_id]]
+						[[contentObjectId]]
 					</button>
 				</div>
 			</td>
 			<td>
 				<a href=[[icon]]>[[name]]</a>
 			</td>
-			<td>[[class_name]]</td>
+			<td>[[published]]</td>
+			<td>[[className]]</td>
 		</tr>
 		{foreach $entries as $entry}
 			<tr data-contentobject-id="{$entry.contentobject_id}">
@@ -52,8 +54,18 @@
 				<td>
 					<a href={$entry.url_alias|ezurl()}>{$entry.name|wash()}</a>
 				</td>
+				<td>{$entry.object.published|l10n( 'shortdatetime' )}</td>
 				<td>{$entry.class_name}</td>
 			</tr>
 		{/foreach}
 	</tbody>
+	{if $entries|count()|not()}
+		<tfoot>
+			<tr>
+				<td colspan="4" class="text-center">
+					No entries
+				</td>
+			</tr>
+		</tfoot>
+	{/if}
 </table>

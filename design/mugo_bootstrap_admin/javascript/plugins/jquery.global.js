@@ -104,6 +104,15 @@
 					},
 				});
 			});
+
+			// remove button
+			$( '.remove-button' ).click( function()
+			{
+				$( '#waiting-modal' ).waitingmodal();
+				alert('d');
+				$( '#waiting-modal' ).waitingmodal( 'progress', '30%' );
+
+			});
 		},
 	};
 

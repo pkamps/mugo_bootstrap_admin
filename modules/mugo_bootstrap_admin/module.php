@@ -39,6 +39,11 @@ $ViewList[ 'versions' ] = array(
 		'script'     => 'versions.php',
 );
 
+$ViewList[ 'remove' ] = array(
+		'ui_context' => 'edit',
+		'script'     => 'remove.php',
+);
+
 $ParentClassID = array(
 		'name'=> 'Parent_Class',
 		'values'=> array(),

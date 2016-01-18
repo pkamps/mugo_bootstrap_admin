@@ -134,11 +134,11 @@
 			$.each( $(this.element).find( '.bg-success' ), function()
 			{
 				result.push(
-					{
-						contentobject_id: 123,
-						name: $(this).find('> a').text(),
-						class_name: 'Image',
-					});
+				{
+					contentObjectId: $(this).attr( 'data-contentobject-id' ),
+					name: $(this).find('> a').text(),
+					className: 'Image',
+				});
 			});
 
 			return result;

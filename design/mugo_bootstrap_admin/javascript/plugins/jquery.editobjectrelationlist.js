@@ -20,21 +20,44 @@
 
     Plugin.prototype =
     {
+        contentTable : null,
+
         init : function()
         {
             var self = this;
 
+            self.contentTable = $(self.element).find( '.nodes-table' );
+
 			// make table it an autosave attribute
-            $(self.element).find( '.nodes-table' ).autosaveattribute(
+            self.contentTable.autosaveattribute(
 			{
 				baseUrl: self.options.baseUrl,
+                attributeId: parseInt( $(this.element).attr( 'data-id' ) ),
+                versionNr: parseInt( $(this.element).attr( 'data-version-nr' ) ),
 				initTrigger: function( plugin )
 				{
-					$(plugin.element).bind( 'DOMSubtreeModified propertychange', function()
+					$(plugin.element).find( 'tbody' ).bind( 'DOMSubtreeModified propertychange', function()
 					{
-						console.log( 'dirty' );
+                        $(plugin.element).autosaveattribute( 'save' );
 					});
 				},
+                getData : function( plugin )
+                {
+                    var contentObjectIds = [];
+                    var contentObjectId;
+
+                    $.each( $(plugin.element).find( 'tr:visible' ), function()
+                    {
+                        contentObjectId = parseInt( $(this).attr( 'data-contentobject-id' ) );
+                        if( contentObjectId )
+                        {
+                            contentObjectIds.push( contentObjectId );
+                        }
+                    });
+
+                    console.log( contentObjectIds );
+                    return contentObjectIds.join( '-' );
+                },
 			});
 
             self.initTriggers();
