@@ -56,67 +56,55 @@
             self.formData.append( 'ezxform_token', $('[name="ezxform_token"]' ).val() );
             self.formData.append( 'parent_node_id', $('[name="NodeID"]' ).val() );
 
+            $( '#waiting-modal' ).waitingmodal();
+
             $.ajax(
+            {
+                url: self.options.baseUrl + '/mugo_bootstrap_admin/upload_files',
+                type: 'POST',
+                // Form data
+                data: self.formData,
+                //headers: { 'Content-Disposition' : 'filename=' +  encodeURIComponent( 'fips_upload_file.pdf' ) + ';' },
+                dataType: 'json',
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false,
+                xhr: function()
                 {
-                    url: self.options.baseUrl + '/mugo_bootstrap_admin/upload_files',
-                    type: 'POST',
-                    // Form data
-                    data: self.formData,
-                    //headers: { 'Content-Disposition' : 'filename=' +  encodeURIComponent( 'fips_upload_file.pdf' ) + ';' },
-                    dataType: 'json',
-                    //Options to tell jQuery not to process data or worry about content-type.
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function( data )
+                    var xhr = new window.XMLHttpRequest();
+
+                    //Upload progress
+                    xhr.upload.addEventListener( 'progress', function(evt)
                     {
-                        self.afterUpload( data );
-                    },
-                    error: function( data )
-                    {
-                        alert( 'Failed to upload files.' );
-                    },
-                });
+                        if( evt.lengthComputable )
+                        {
+                            var percentComplete = evt.loaded / evt.total * 100;
+
+                            console.log( percentComplete + '%' );
+                            $( '#waiting-modal' ).waitingmodal( 'progress', percentComplete + '%' );
+                        }
+                    }, false);
+
+                    return xhr;
+                },
+                success: function( data )
+                {
+                    $( '#waiting-modal' ).waitingmodal( 'hide' );
+                    self.afterUpload( data );
+                },
+                error: function( data )
+                {
+                    $( '#waiting-modal' ).waitingmodal( 'hide' );
+                    alert( 'Failed to upload files.' );
+                },
+            });
         },
 
         afterUpload : function( data )
         {
-            var self = this;
-
-            var message = 'Files uploaded:\n\n';
-            var result;
-
-            $.each( data, function()
-            {
-                result = this.errors !== '' ? this.errors : 'success';
-                message = message + this.name + ': ' + result + '\n';
-            });
-
-            message = message + '\n\n Do you want to edit the files now?';
-
-            var editRedirect = confirm( message );
-
-            if( editRedirect )
-            {
-                var parameters =
-                {
-                    contentobject_ids: [],
-                    redirect_node_id: $('[name="NodeID"]' ).val(),
-                }
-
-                $.each( data, function()
-                {
-                    parameters.contentobject_ids.push( this.contentobject_id );
-                });
-
-                var url = self.options.baseUrl + '/admin_edit/multi_edit?' + $.param( parameters );
-
-                location.href = url;
-            }
-            else
-            {
-                location.reload();
-            }
+            location.reload();
+            return;
         }
     };
 

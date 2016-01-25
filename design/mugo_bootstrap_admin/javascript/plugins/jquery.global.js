@@ -63,19 +63,6 @@
 				form.submit();
 			});
 
-			$( '#view-button li a' ).click( function()
-			{
-				// TODO: incomplete
-				$( '#viewModal iframe' ).attr( 'src', '/content/versionview/920791/5/eng-US/site_access/site_origin' );
-
-				$( '#viewModal' ).modal(
-				{
-					backdrop: true,
-				});
-
-				return false;
-			});
-
 			// show object versions
 			$( '#show-versions' ).click( function()
 			{
@@ -108,9 +95,6 @@
 			// remove button
 			$( '.remove-button' ).click( function()
 			{
-				$( '#waiting-modal' ).waitingmodal();
-				alert('d');
-				$( '#waiting-modal' ).waitingmodal( 'progress', '30%' );
 
 			});
 		},

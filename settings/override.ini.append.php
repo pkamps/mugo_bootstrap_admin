@@ -12,4 +12,16 @@ MatchFile=treemenu/saved_search.tpl
 Subdir=templates
 Match[class_identifier]=saved_search
 
+[image_preview]
+Source=node/view/preview.tpl
+MatchFile=preview/image.tpl
+Subdir=templates
+Match[class_identifier]=image
+
+[gallery_preview]
+Source=node/view/preview.tpl
+MatchFile=preview/gallery.tpl
+Subdir=templates
+Match[class_identifier]=csm_gallery
+
 */ ?>

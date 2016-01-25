@@ -21,6 +21,34 @@ body
 	display: none;
 }
 
+#iframe-wrapper
+{
+	-webkit-transition: width 1s;
+	transition: width 1s;
+	height: 800px;
+	border: 1px solid lightgrey;
+}
+
+.extra-small-width
+{
+	width: 340px;
+}
+
+.small-width
+{
+	width: 788px;
+}
+
+.medium-width
+{
+	width: 1102px;
+}
+
+.large-width
+{
+	width: 1220px;
+}
+
 /*
 #edit-form .content
 {

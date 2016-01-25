@@ -14,10 +14,14 @@ JavaScriptList[]=plugins/jquery.editcontent.js
 JavaScriptList[]=plugins/jquery.editobjectrelationlist.js
 JavaScriptList[]=plugins/jquery.remembertab.js
 JavaScriptList[]=plugins/jquery.waitingmodal.js
+JavaScriptList[]=plugins/jquery.previewmodal.js
 JavaScriptList[]=jquery.relatedContentAdder.js
 JavaScriptList[]=jquery-ui.min.js
 JavaScriptList[]=jquery.tocanvas.js
 JavaScriptList[]=jquery.damimages.js
 JavaScriptList[]=mustache.min.js
+
+# CSM depencies
+JavaScriptList[]=plugins/jquery.createimagefromvideo.js
 
 */ ?>
