@@ -27,7 +27,7 @@
         <h2>
             {$object.name|wash()}
             <small>
-                {$object.class_identifier|class_icon( normal, $object.class_name )}
+                <span class="icon-default icon-{$object.class_identifier}"></span>
                 {first_set( $class.nameList[$content_language], $class.name )|wash()}
             </small>
         </h2>

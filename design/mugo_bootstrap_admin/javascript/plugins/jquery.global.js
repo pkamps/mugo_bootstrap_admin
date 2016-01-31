@@ -82,7 +82,6 @@
 					processData: false,
 					success: function( data )
 					{
-						console.log( data );
 						$( '#collapseThree > div' ).html( data );
 					},
 					error: function( data )
@@ -95,7 +94,41 @@
 			// remove button
 			$( '.remove-button' ).click( function()
 			{
+				if( confirm( 'Are you sure you want to remove this object?' ) )
+				{
+					var formData = new FormData();
+					formData.append( 'contentobjectid', $( self.element ).find( 'input[name="ContentObjectID"]' ).val() );
 
+					$.ajax(
+					{
+						url: self.options.baseUrl + '/mugo_bootstrap_admin/remove_object',
+						type: 'POST',
+						// Form data
+						data: formData,
+						//dataType: 'text',
+						//Options to tell jQuery not to process data or worry about content-type.
+						cache: false,
+						contentType: false,
+						processData: false,
+						success: function( data )
+						{
+							data = JSON.parse( data );
+
+							if( data )
+							{
+								location.href = self.options.baseUrl + '/content/view/full/' + $( self.element ).find( 'div.full' ).attr( 'data-parent-node-id' );
+							}
+							else
+							{
+								alert( 'Failed to remove object' );
+							}
+						},
+						error: function( data )
+						{
+							alert( 'Failed to remove object.' );
+						},
+					});
+				}
 			});
 		},
 	};

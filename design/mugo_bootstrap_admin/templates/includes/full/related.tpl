@@ -6,7 +6,10 @@
 <section class="related">
 	{def $children = array()}
 	{if $node.is_container}
-		{set $children = fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id ) )}
+		{set $children = fetch( 'content', 'list', hash(
+			'parent_node_id', $node.node_id,
+			'limit', 200,
+		) ) }
 	{/if}
 
 	<ul class="nav nav-tabs" role="tablist">

@@ -13,6 +13,17 @@
     'Queued'|i18n( 'design/standard/content/history' ),
 )}
 
+{def $background_map = hash(
+    0, 'label-success',
+    1, 'label-primary',
+    2, 'label-warning',
+    3, 'label-info',
+    4, 'label-danger',
+    5, 'label-success',
+    6, 'label-default',
+    7, 'label-warning',
+)}
+
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +36,7 @@
         {foreach $versions as $version}
             <tr>
                 <td>{$version.version}</td>
-                <td>{$status_names[ $version.status ]}</td>
+                <td><span class="label {first_set( $background_map[ $version.status ], '' )}">{$status_names[ $version.status ]}</span></td>
                 <td>{$version.creator.name|wash()}</td>
             </tr>
         {/foreach}

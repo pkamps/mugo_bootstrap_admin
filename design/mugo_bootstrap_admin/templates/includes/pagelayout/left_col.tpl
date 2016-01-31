@@ -17,7 +17,8 @@
 		<div class="tree">
 			<ul>
 				<li class="container" data-value="{$user.contentobject.main_node_id}" data-open="1">
-					<span><i class="icon-folder-open"></i>{$user.contentobject.name|wash()}</span>
+					<span class="icon-default icon-user"></span>
+					{$user.contentobject.name|wash()}
 				</li>
 			</ul>
 		</div>
@@ -27,7 +28,8 @@
 		<div class="tree">
 			<ul>
 				<li class="container" data-value="1" data-open="1">
-					<span><i class="icon-folder-open"></i>All</span>
+					<span class="icon-folder"></span>
+					All
 				</li>
 			</ul>
 		</div>
@@ -49,7 +51,8 @@
 		<div class="tree">
 			<ul>
 				<li class="container" data-value="0" data-open="0">
-					<span><i class="icon-folder-open"></i>Saved Searches</span>
+					<span class="icon-folder-open"></span>
+					Saved Searches
 				</li>
 			</ul>
 		</div>

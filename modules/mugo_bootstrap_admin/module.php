@@ -44,6 +44,11 @@ $ViewList[ 'remove' ] = array(
 		'script'     => 'remove.php',
 );
 
+$ViewList[ 'remove_object' ] = array(
+	'ui_context' => 'edit',
+	'script'     => 'remove_object.php',
+);
+
 $ParentClassID = array(
 		'name'=> 'Parent_Class',
 		'values'=> array(),

@@ -24,4 +24,11 @@ JavaScriptList[]=mustache.min.js
 # CSM depencies
 JavaScriptList[]=plugins/jquery.createimagefromvideo.js
 
+[StylesheetSettings]
+CSSFileList[]
+CSSFileList[]=bootstrap.min.css
+CSSFileList[]=bootstrap-treeview.min.css
+CSSFileList[]=mugo_bootstrap_admin.css
+CSSFileList[]=contentclasses.css
+
 */ ?>

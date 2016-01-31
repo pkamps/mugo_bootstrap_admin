@@ -89,8 +89,7 @@
 
             $( self.element ).find( '#open-in-new-window' ).click( function()
             {
-                console.log( $(self.element).find( 'iframe').attr( 'src' ) );
-                console.log( self.options.targetVars );
+                window.open( $(self.element).find( 'iframe').attr( 'src' ) );
             });
 
             // TODO: not sure if that's the right place for it

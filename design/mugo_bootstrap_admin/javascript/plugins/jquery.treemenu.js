@@ -30,7 +30,7 @@
 		{
 			var self = this;
 
-			self.loadList( $( self.element ).find( 'li.container' ) );
+			self.loadList( $( self.element ) );
 		},
 
 		/**

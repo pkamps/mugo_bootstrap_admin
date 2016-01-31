@@ -8,9 +8,7 @@
 
 	<title>Mugo Studio</title>
 
-	<link href={'stylesheets/bootstrap.min.css'|ezdesign()} rel="stylesheet">
-	<link href={'stylesheets/bootstrap-treeview.min.css'|ezdesign()} rel="stylesheet">
-	<link href={'stylesheets/mugo_bootstrap_admin.css'|ezdesign()} rel="stylesheet">
+	{ezcss_load( ezini( 'StylesheetSettings', 'CSSFileList', 'design.ini' ) )}
 
 	{def $page_head_scripts = array(
 		'modernizr.js',

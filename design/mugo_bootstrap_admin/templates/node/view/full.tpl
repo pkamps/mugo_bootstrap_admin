@@ -5,7 +5,7 @@
 	$multi_edit = ezini( $node.class_identifier, 'MultiEdit', 'multiedit.ini' )
 }
 
-<div class="full">
+<div class="full" data-content-object-id="{$node.contentobject_id}" data-node-id="{$node.node_id}" data-parent-node-id="{$node.parent_node_id}">
 	{node_view_gui content_node=$node view='preview'}
 
 	{* node actions *}
@@ -116,7 +116,7 @@
 					<div class="container text-center">
 						<div class="col-xs-2">
 							<select id="preview-selector" class="form-control">
-								<option data-iframe-target={concat( 'content/view/data/', $node.node_id )|ezurl()} value="data">Data</option>
+								<option data-iframe-target={concat( 'content/view/data/', $node.node_id )|ezurl()} data-default-size="medium-width" value="data">Data</option>
 								{def
 									$iframe_target = ''
 									$iframe_default_size = ''
