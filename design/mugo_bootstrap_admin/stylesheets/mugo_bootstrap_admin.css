@@ -61,75 +61,80 @@ body
 }
 */
 
-.tree
-{
-	min-height:20px;
-}
-.tree > ul
-{
-	padding-left: 0px;
-}
-.tree ul
-{
-	padding-left: 10px;
-}
-.tree li {
-	list-style-type:none;
-	margin:0;
-	padding:10px 5px 0 5px;
-	position:relative
-}
-.tree li::before, .tree li::after {
-	content:'';
-	left:-5px;
-	position:absolute;
-	right:auto
-}
-.tree li::before {
-	border-left:1px solid #999;
-	bottom:50px;
-	height:38px;
-	top:0;
-	width:1px
-}
-.tree li::after {
-	border-top:1px solid #999;
-	height:20px;
-	top:25px;
-	width:10px
-}
-.tree li span {
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border:1px solid #999;
-	border-radius:5px;
-	display:inline-block;
-	padding:3px 8px;
-	text-decoration:none
-}
-.tree li.container > span {
-	cursor:pointer
-}
-.tree>ul>li::before,
-.tree>ul>li::after
-{
-	border:0
-}
-.tree li:last-child::before {
-	height:30px
-}
-.tree li.container > span:hover,
-.tree li.container > span:hover+ul li span
-{
-	background:#eee;
-	border:1px solid #94a0b4;
-	color:#000
-}
-
 .content-states td
 {
 	text-align: center;
 	padding: 0px 10px;
+}
+
+/* fancytree additions */
+.tree ul.fancytree-container
+{
+	border: none;
+}
+
+/* TODO: will cause theming problems */
+.tree ul.fancytree-container .fancytree-title
+{
+	color: #337ab7;
+}
+
+
+/* context menu */
+.mugo-context-menu .popover-content
+{
+	padding: 0px;
+}
+
+.mugo-context-menu ul
+{
+	margin: 2px 0 0;
+	padding: 5px 0;
+	list-style: none;
+}
+
+.mugo-context-menu li > a
+{
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: 400;
+	line-height: 1.4;
+	color: #333;
+	white-space: nowrap;
+}
+
+.mugo-context-menu li > a:hover
+{
+	color: #262626;
+	text-decoration: none;
+	background-color: #f5f5f5
+}
+
+.mugo-context-menu .divider
+{
+	height: 1px;
+	margin: 9px 0;
+	overflow: hidden;
+	background-color: #e5e5e5;
+}
+
+.mugo-context-menu h3
+{
+	width: 200px;
+	height: 150px;
+	overflow: hidden;
+}
+
+/* minis */
+div.mini
+{
+	text-align: center;
+}
+
+div.mini span
+{
+	font-size: 50px;
 }
 
 /** hacks **/

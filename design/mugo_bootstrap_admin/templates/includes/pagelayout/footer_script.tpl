@@ -9,5 +9,10 @@
 {ezscript_load( ezini( 'JavaScriptSettings', 'JavaScriptList', 'design.ini' ) )}
 
 <script>
+{literal}
+$(function()
+{
 	$( 'body' ).global();
+});
+{/literal}
 </script>

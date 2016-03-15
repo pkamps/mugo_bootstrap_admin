@@ -3,9 +3,10 @@
 $module = $Params[ 'Module' ];
 $tpl    = eZTemplate::factory();
 $content = '';
+$limit = 200;
 
-$value = $Params[ 'value' ];
-$type = $Params[ 'type' ];
+$value = $_REQUEST[ 'value' ];
+$type = $_REQUEST[ 'type' ];
 
 switch( $type )
 {
@@ -23,12 +24,18 @@ switch( $type )
 				{
 					$name = explode( '/', $view[ 'uri' ] )[2];
 
-					$viewData[ $name ] = $view[ 'uri' ];
+					$viewData[] = array(
+						'title' => $name,
+						'key' => $view[ 'uri' ],
+						'folder' => false,
+						'lazy' => false,
+						'icon' => 'glyphicon icon-default',
+						'href' => $view[ 'uri' ],
+					);
 				}
 			}
 
-			$tpl->setVariable( 'views', $viewData );
-			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_views.tpl' );
+			$content = json_encode( $viewData );
 		}
 	}
 	break;
@@ -54,7 +61,7 @@ switch( $type )
 		// special case for setup node
 		if( $value == 48 )
 		{
-			$moduleData = array();
+			$data = [];
 
 			$moduleIni = eZINI::instance( 'module.ini' );
 			$moduleNames = $moduleIni->variable( 'ModuleSettings', 'ModuleList' );
@@ -64,21 +71,88 @@ switch( $type )
 				$module = eZModule::findModule( $identifier );
 				// if module does not have a name
 				$name = $module->Module[ 'name' ] ? $module->Module[ 'name' ] : $identifier;
-				$moduleData[ $name ] = $identifier;
+
+				$data[ $name ] = array(
+					'title' => $name,
+					'key' => $identifier,
+					'folder' => true,
+					'lazy' => true,
+					'icon' => 'glyphicon icon-default',
+					'type' => 'view',
+				);
 			}
 
-			ksort( $moduleData, SORT_STRING );
+			ksort( $data, SORT_STRING );
 
-			$tpl->setVariable( 'modules', $moduleData );
-			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_modules.tpl' );
+			// remove keys
+			foreach( $data as $entry )
+			{
+				$cleanData[] = $entry;
+			}
+
+			$content = json_encode( $cleanData );
 		}
 		else
 		{
-			$tpl->setVariable( 'parent_node_id', $value );
-			$content = $tpl->fetch( 'design:modules/mugo_bootstrap_admin/treemenu_list.tpl' );
+			$data = array();
+
+			$parentNodeId = (int) $value;
+			$parentNode = eZContentObjectTreeNode::fetch( $parentNodeId );
+			$params = array(
+				'parent_node_id' => $parentNodeId,
+				'limit'=> 200,
+				'sort_by' => $parentNode->attribute( 'sort_array' ),
+			);
+			$list = eZFunctionHandler::execute( 'content', 'list', $params );
+			$listCount = eZFunctionHandler::execute( 'content', 'list_count', $params );
+
+			foreach( $list as $node )
+			{
+				$isContainer = (boolean) $node->attribute( 'is_container' );
+
+				$entry = array(
+					'title' => $node->attribute( 'name' ),
+					'key' => $node->attribute( 'node_id' ),
+					'folder' => $isContainer,
+					'lazy' => $isContainer,
+					'icon' => 'glyphicon icon-default icon-' . $node->attribute( 'class_identifier' ),
+					'node_id' => $node->attribute( 'node_id' ),
+					'contentobject_id' => $node->attribute( 'contentobject_id' ),
+					'href' => getLink( $node ),
+				);
+
+				$data[] = $entry;
+			}
+
+			$content = json_encode( $data );
 		}
 	}
 }
 
-$Result[ 'content' ] = $content;
-$Result[ 'pagelayout' ] = false;
+/**
+ * TODO: hack
+ *
+ * @param $node
+ * @return string
+ */
+function getLink( $node )
+{
+	if( $node->attribute( 'class_identifier' ) == 'bookmark' )
+	{
+		$dataMap = $node->attribute( 'data_map' );
+
+		if( $dataMap[ 'link' ]->attribute( 'has_content' ) )
+		{
+			$return = '/' . ltrim( $dataMap[ 'link' ]->attribute( 'content' ), '/' );
+		}
+	}
+	else
+	{
+		$return = '/' . $node->attribute( 'url_alias' );
+	}
+
+	return $return;
+}
+
+echo $content;
+eZExecution::cleanExit();

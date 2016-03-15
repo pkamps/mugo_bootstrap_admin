@@ -27,3 +27,12 @@
 		</div>
 	</div>
 </div>
+
+<div id="contextmenu-content" class="template">
+	<ul>
+		{* <li><a data-action="view">View</a></li> *}
+		<li><a href="/content/edit/[[contentobject_id]]">Edit</a></li>
+		<li role="separator" class="divider"></li>
+		<li><a href="#">Delete</a></li>
+	</ul>
+</div>

@@ -24,4 +24,10 @@ MatchFile=preview/gallery.tpl
 Subdir=templates
 Match[class_identifier]=csm_gallery
 
+[image_mini]
+Source=node/view/mini.tpl
+MatchFile=mini/image.tpl
+Subdir=templates
+Match[class_identifier]=image
+
 */ ?>

@@ -21,7 +21,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr data-contentobject-id="[[contentObjectId]]" class="template">
+		<tr data-contentobject_id="[[contentObjectId]]" class="template">
 			<td><input type="checkbox" /></td>
 			<td>
 				<div class="btn-group">
@@ -37,18 +37,20 @@
 			<td>[[className]]</td>
 		</tr>
 		{foreach $entries as $entry}
-			<tr data-contentobject-id="{$entry.contentobject_id}">
+			<tr data-node_id="{$entry.node_id}" data-contentobject_id="{$entry.contentobject_id}">
 				<td><input type="checkbox" /></td>
 				<td>
 					<div class="btn-group">
-						<button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button">
+						<button class="btn btn-default btn-sm" data-toggle="contextmenu" aria-haspopup="true" aria-expanded="false" type="button">
 							<span class="icon-default icon-{$entry.class_identifier}"></span>
 						</button>
+						{*
 						<ul class="dropdown-menu">
 							<li><a href={concat( '/content/edit/', $entry.contentobject_id )|ezurl()}>Edit</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="#">Delete</a></li>
 						</ul>
+						*}
 					</div>
 				</td>
 				<td>

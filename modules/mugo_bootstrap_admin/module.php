@@ -5,7 +5,6 @@ $Module = array( 'name' => 'Mugo Bootstrap Admin' );
 $ViewList = array();
 $ViewList[ 'treemenu_list' ] = array(
 		'script' => 'treemenu_list.php',
-		'params' => array( 'value', 'type' ),
 );
 
 $ViewList[ 'upload_files' ] = array(
@@ -49,6 +48,17 @@ $ViewList[ 'remove_object' ] = array(
 	'script'     => 'remove_object.php',
 );
 
+$ViewList[ 'bookmark' ] = array(
+	'script'     => 'bookmark.php',
+	'ui_context' => 'administration',
+);
+
+$ViewList[ 'node_view_gui' ] = array(
+	'script'     => 'node_view_gui.php',
+	'ui_context' => 'administration',
+	'functions'  => array( 'public' ),
+);
+
 $ParentClassID = array(
 		'name'=> 'Parent_Class',
 		'values'=> array(),
@@ -66,6 +76,7 @@ $mimeTypes = array(
 );
 
 $FunctionList = array();
+$FunctionList[ 'public' ] = array();
 $FunctionList[ 'upload_files' ] = array(
 		'parent_class' => $ParentClassID,
 		'mime_types' => $mimeTypes,

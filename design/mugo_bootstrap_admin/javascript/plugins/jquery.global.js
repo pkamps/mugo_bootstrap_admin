@@ -91,6 +91,12 @@
 				});
 			});
 
+			//context menus
+			$( '[data-toggle="contextmenu"]' ).ezcontextmenu(
+			{
+				baseUrl: self.options.baseUrl,
+			});
+
 			// remove button
 			$( '.remove-button' ).click( function()
 			{
@@ -129,6 +135,14 @@
 						},
 					});
 				}
+			});
+
+			// bookmark button
+			$( '.bookmark-button' ).click( function()
+			{
+				console.log( $( this ).closest( '[data-node-id]' ) );
+
+				$.notify( 'Bookmark created' );
 			});
 		},
 	};

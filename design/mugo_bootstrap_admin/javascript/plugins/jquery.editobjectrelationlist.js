@@ -73,7 +73,7 @@
 
                 if( currentTree.length )
                 {
-                    var nodes = $( '.tree:visible' ).treemenu( 'getSelectedNodes' );
+                    var nodes = currentTree.fancytree( 'getTree' ).getSelectedNodes();
 
                     if( nodes.length )
                     {

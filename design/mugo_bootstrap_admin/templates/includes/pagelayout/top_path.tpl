@@ -5,6 +5,7 @@
 	{set $elements = $elements|extract( 0, $elements|count()|dec() )}
 {/if}
 
+{*
 <div class="btn-group pull-right" role="group">
 	<button type="button" class="btn btn-default">
 		<span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
@@ -13,6 +14,7 @@
 		<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
 	</button>
 </div>
+*}
 
 <ol class="breadcrumb">
 	<li></li>

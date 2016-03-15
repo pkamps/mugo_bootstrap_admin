@@ -12,10 +12,24 @@
 	{def $previews = ezini( 'Previews', 'List', 'mugo_bootstrap_admin.ini' )}
 
 	<div class="btn-toolbar" role="toolbar">
+
+		<div id="view-button" class="btn-group">
+			<button type="button" class="btn btn-default" data-layout="data"><span class="glyphicon glyphicon-eye-open"></span></button>
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<span class="caret"></span>
+				<span class="sr-only">Toggle Dropdown</span>
+			</button>
+			<ul class="dropdown-menu">
+				{foreach $previews as $key => $preview}
+					<li><a data-layout="{$key}" href="#">{$preview}</a></li>
+				{/foreach}
+			</ul>
+		</div>
+
 		<div class="btn-group" role="group">
 			{if $multi_edit|count()}
 				<div id="edit-button" class="btn-group">
-					<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()}>Edit</button>
+					<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()}><span class="glyphicon glyphicon-pencil"></span></button>
 					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
 						<span class="sr-only">Toggle Dropdown</span>
@@ -27,26 +41,14 @@
 					</ul>
 				</div>
 			{else}
-				<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()}>Edit</button>
+				<button type="button" class="btn btn-primary" data-href={concat( '/content/edit/', $node.contentobject_id )|ezurl()}><span class="glyphicon glyphicon-pencil"></span></button>
 			{/if}
+			<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-move"></span></button>
+			<button type="button" class="btn btn-default bookmark-button"><span class="glyphicon glyphicon-bookmark"></span></button>
 		</div>
-		<div id="view-button" class="btn-group">
-			<button type="button" class="btn btn-default" data-layout="data">View</button>
-			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<span class="caret"></span>
-				<span class="sr-only">Toggle Dropdown</span>
-			</button>
-			<ul class="dropdown-menu">
-				{foreach $previews as $key => $preview}
-					<li><a data-layout="{$key}" href="#">{$preview}</a></li>
-				{/foreach}
-			</ul>
-		</div>
+
 		<div class="btn-group">
-			<button type="button" class="btn btn-default">Move</button>
-		</div>
-		<div class="btn-group">
-			<button type="button" class="btn btn-default remove-button">Remove</button>
+			<button type="button" class="btn btn-default remove-button"><span class="glyphicon glyphicon-remove"></span></button>
 		</div>
 	</div>
 	<br>
