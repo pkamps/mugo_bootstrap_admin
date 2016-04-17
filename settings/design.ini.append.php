@@ -4,7 +4,6 @@
 DesignExtensions[]=mugo_bootstrap_admin
 
 [JavaScriptSettings]
-JavaScriptList[]
 JavaScriptList[]=bootstrap.min.js
 JavaScriptList[]=plugins/jquery.global.js
 JavaScriptList[]=plugins/jquery.autosaveattribute.js
@@ -27,7 +26,6 @@ JavaScriptList[]=bootstrap-notify.min.js
 JavaScriptList[]=plugins/jquery.createimagefromvideo.js
 
 [StylesheetSettings]
-CSSFileList[]
 CSSFileList[]=bootstrap.min.css
 #CSSFileList[]=bootstrap-treeview.min.css
 CSSFileList[]=mugo_bootstrap_admin.css

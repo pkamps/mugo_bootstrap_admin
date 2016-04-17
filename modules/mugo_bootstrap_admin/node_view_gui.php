@@ -2,8 +2,9 @@
 $tpl = eZTemplate::factory();
 
 $allowed_views = array(
-		'full',
-		'mini',
+	'full',
+	'mini',
+	'data',
 );
 
 $node_id = (int) $_REQUEST[ 'node_id' ];

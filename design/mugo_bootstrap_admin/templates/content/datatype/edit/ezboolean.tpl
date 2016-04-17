@@ -1,4 +1,25 @@
-{* TODO: not done yet *}
+{* not tested *}
 <div>
-	<input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="checkbox" name="{$attribute_base}_data_boolean_{$attribute.id}" {$attribute.data_int|choose( '', 'checked="checked"' )} value="" />
+	<input id="attribute-{$attribute.id}" data-id="{$attribute.id}" data-version-nr="{$attribute.version}" class="form-control" type="checkbox" {$attribute.data_int|choose( '', 'checked="checked"' )} value="1" />
 </div>
+
+<script>
+	{literal}
+	$(function()
+	{
+		var id = {/literal}{$attribute.id}{literal};
+
+		$( '#attribute-' + id ).autosaveattribute(
+		{
+			baseUrl: eZBaseUrl,
+			initTrigger: function( plugin )
+			{
+				$(plugin.element).change( function()
+				{
+					plugin.save();
+				});
+			},
+		});
+	});
+	{/literal}
+</script>

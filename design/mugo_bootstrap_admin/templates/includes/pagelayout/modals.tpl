@@ -30,6 +30,8 @@
 
 <div id="contextmenu-content" class="template">
 	<ul>
+		<li><a href="[[href]]"><strong>View</strong></a></li>
+		<li><a href="/content/view/full/[[node_id]]">View node</a></li>
 		{* <li><a data-action="view">View</a></li> *}
 		<li><a href="/content/edit/[[contentobject_id]]">Edit</a></li>
 		<li role="separator" class="divider"></li>

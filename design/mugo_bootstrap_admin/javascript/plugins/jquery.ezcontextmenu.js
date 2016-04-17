@@ -61,7 +61,7 @@
                     var html = $( '#contextmenu-content' ).html();
 
                     Mustache.parse( html, [ '[[', ']]' ] );
-
+                    
                     return Mustache.render( html, self.getData() );
                 },
                 html: true,

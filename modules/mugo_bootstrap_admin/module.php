@@ -4,43 +4,43 @@ $Module = array( 'name' => 'Mugo Bootstrap Admin' );
 
 $ViewList = array();
 $ViewList[ 'treemenu_list' ] = array(
-		'script' => 'treemenu_list.php',
+	'script' => 'treemenu_list.php',
 );
 
 $ViewList[ 'upload_files' ] = array(
-		'functions'  => array( 'upload_files' ),
-		'ui_context' => 'edit',
-		'script'     => 'upload_files.php',
+	'functions'  => array( 'upload_files' ),
+	'ui_context' => 'edit',
+	'script'     => 'upload_files.php',
 );
 
 $ViewList[ 'multi_edit' ] = array(
-		'ui_context' => 'edit',
-		'script'     => 'multi_edit.php',
+	'ui_context' => 'edit',
+	'script'     => 'multi_edit.php',
 );
 
 $ViewList[ 'store_attribute' ] = array(
-		'ui_context' => 'edit',
-		'script'     => 'store_attribute.php',
+	'ui_context' => 'edit',
+	'script'     => 'store_attribute.php',
 );
 
 $ViewList[ 'publish' ] = array(
-		'ui_context' => 'edit',
-		'script'     => 'publish.php',
+	'ui_context' => 'edit',
+	'script'     => 'publish.php',
 );
 
 $ViewList[ 'discard' ] = array(
-		'ui_context' => 'edit',
-		'script'     => 'discard.php',
+	'ui_context' => 'edit',
+	'script'     => 'discard.php',
 );
 
 $ViewList[ 'versions' ] = array(
-		'ui_context' => 'edit',
-		'script'     => 'versions.php',
+	'ui_context' => 'edit',
+	'script'     => 'versions.php',
 );
 
 $ViewList[ 'remove' ] = array(
-		'ui_context' => 'edit',
-		'script'     => 'remove.php',
+	'ui_context' => 'edit',
+	'script'     => 'remove.php',
 );
 
 $ViewList[ 'remove_object' ] = array(

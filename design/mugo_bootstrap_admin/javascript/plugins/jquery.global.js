@@ -140,9 +140,42 @@
 			// bookmark button
 			$( '.bookmark-button' ).click( function()
 			{
-				console.log( $( this ).closest( '[data-node-id]' ) );
+				var context = $( this ).closest( '[data-node-id]' );
 
-				$.notify( 'Bookmark created' );
+				var formData = new FormData();
+				formData.append( 'node_id', context.attr( 'data-node-id' ) );
+				formData.append( 'name', context.attr( 'data-name') );
+
+				$.ajax(
+				{
+					url: self.options.baseUrl + '/mugo_bootstrap_admin/bookmark',
+					type: 'POST',
+					// Form data
+					data: formData,
+					//dataType: 'text',
+					//Options to tell jQuery not to process data or worry about content-type.
+					cache: false,
+					contentType: false,
+					processData: false,
+					success: function( data )
+					{
+						data = JSON.parse( data );
+
+						if( data )
+						{
+							$.notify( 'Bookmark created' );
+
+						}
+						else
+						{
+							$.notify( 'Failed to create bookmark.' );
+						}
+					},
+					error: function( data )
+					{
+						$.notify( 'Failed to create bookmark.' );
+					},
+				});
 			});
 		},
 	};

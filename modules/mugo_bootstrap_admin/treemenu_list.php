@@ -118,6 +118,8 @@ switch( $type )
 					'icon' => 'glyphicon icon-default icon-' . $node->attribute( 'class_identifier' ),
 					'node_id' => $node->attribute( 'node_id' ),
 					'contentobject_id' => $node->attribute( 'contentobject_id' ),
+					'class_identifier' => $node->attribute( 'class_identifier' ),
+					'name' => $node->attribute( 'name' ),
 					'href' => getLink( $node ),
 				);
 

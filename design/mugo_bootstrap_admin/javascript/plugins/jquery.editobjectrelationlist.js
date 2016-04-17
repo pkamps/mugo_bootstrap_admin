@@ -46,9 +46,9 @@
                     var contentObjectIds = [];
                     var contentObjectId;
 
-                    $.each( $(plugin.element).find( 'tr:visible' ), function()
+                    $.each( $(plugin.element).find( 'tbody tr:visible' ), function()
                     {
-                        contentObjectId = parseInt( $(this).attr( 'data-contentobject-id' ) );
+                        contentObjectId = parseInt( $(this).attr( 'data-contentobject_id' ) );
                         if( contentObjectId )
                         {
                             contentObjectIds.push( contentObjectId );
@@ -81,9 +81,19 @@
                         var templateElement = $(self.element).find( 'tr.template' )[0];
 
                         var row;
+                        var vars;
                         $.each( nodes, function()
                         {
-                            row = self.renderTemplate( templateElement, this, true );
+                            console.log( this.data );
+
+                            vars =
+                            {
+                                contentObjectId: this.data.contentobject_id,
+                                name: this.data.name,
+                                className: this.data.class_identifier,
+                                icon: this.data.href,
+                            };
+                            row = self.renderTemplate( templateElement, vars, true );
                             target.append( $(row).removeClass( 'template' ) );
                         });
                     }
