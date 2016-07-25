@@ -53,6 +53,11 @@ $ViewList[ 'bookmark' ] = array(
 	'ui_context' => 'administration',
 );
 
+$ViewList[ 'move' ] = array(
+	'script'     => 'move.php',
+	'ui_context' => 'administration',
+);
+
 $ViewList[ 'node_view_gui' ] = array(
 	'script'     => 'node_view_gui.php',
 	'ui_context' => 'administration',

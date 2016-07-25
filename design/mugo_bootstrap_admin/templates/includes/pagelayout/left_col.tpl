@@ -181,6 +181,7 @@ $(function()
 				return true;
 			},
 			dragEnter: function(node, data) {
+				console.log( node );
 				/* data.otherNode may be null for non-fancytree droppables.
 				 * Return false to disallow dropping on node. In this case
 				 * dragOver and dragLeave are not called.
@@ -190,14 +191,15 @@ $(function()
 				 */
 				// Prevent dropping a parent below another parent (only sort
 				// nodes under the same parent):
-//    if(node.parent !== data.otherNode.parent){
-//      return false;
-//    }
+				//    if(node.parent !== data.otherNode.parent){
+				//      return false;
+				//    }
 				// Don't allow dropping *over* a node (would create a child). Just
 				// allow changing the order:
-//    return ["before", "after"];
+				//    return ["before", "after"];
 				// Accept everything:
-				return true;
+
+				return node.folder;
 			},
 			dragOver: function(node, data) {
 			},
@@ -207,10 +209,43 @@ $(function()
 			},
 			dragDrop: function(node, data)
 			{
-				// This function MUST be defined to enable dropping of items on the tree.
-				// data.hitMode is 'before', 'after', or 'over'.
-				// We could for example move the source to the new target:
-				data.otherNode.moveTo( node, data.hitMode );
+				if( confirm( 'Do you want to move the node?' ) )
+				{
+					var nodeId = data.otherNode.data.node_id;
+					var newParentNode = node.data.node_id;
+
+
+					var formData = new FormData();
+
+					formData.append( 'new_parent_node_id', newParentNode );
+					formData.append( 'node_id', nodeId );
+
+					$.ajax(
+					{
+						url: eZBaseUrl + '/mugo_bootstrap_admin/move',
+						type: 'POST',
+						// Form data
+						data: formData,
+						dataType: 'json',
+						//Options to tell jQuery not to process data or worry about content-type.
+						cache: false,
+						contentType: false,
+						processData: false,
+						success: function( data )
+						{
+
+						},
+						error: function( data )
+						{
+							alert( 'Failed to move node.' );
+						},
+					});
+
+					// This function MUST be defined to enable dropping of items on the tree.
+					// data.hitMode is 'before', 'after', or 'over'.
+					// We could for example move the source to the new target:
+					data.otherNode.moveTo( node, data.hitMode );
+				}
 			}
 		}
 	});

@@ -108,7 +108,7 @@ switch( $type )
 
 			foreach( $list as $node )
 			{
-				$isContainer = (boolean) $node->attribute( 'is_container' );
+				$isContainer = isContainer( $node );
 
 				$entry = array(
 					'title' => $node->attribute( 'name' ),
@@ -131,6 +131,18 @@ switch( $type )
 	}
 }
 
+function isContainer( $node )
+{
+	$isContainer = (boolean) $node->attribute( 'is_container' );
+
+	if( !$isContainer && in_array( $node->attribute( 'class_identifier' ), array( 'bookmark', 'saved_search' ) ) )
+	{
+		$isContainer = true;
+	}
+
+	return $isContainer;
+}
+
 /**
  * TODO: hack
  *
@@ -146,6 +158,10 @@ function getLink( $node )
 		if( $dataMap[ 'link' ]->attribute( 'has_content' ) )
 		{
 			$return = '/' . ltrim( $dataMap[ 'link' ]->attribute( 'content' ), '/' );
+		}
+		elseif( $dataMap[ 'node_id' ]->attribute( 'has_content' ) )
+		{
+			$return = '/content/view/full/' . $dataMap[ 'node_id' ]->attribute( 'content' );
 		}
 	}
 	else
